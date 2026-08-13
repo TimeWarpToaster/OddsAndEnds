@@ -1,0 +1,11 @@
+D:\VSProjects2019\AlgorithmicEncryptor_01\bin\Debug\AlgorithmicEncryptor_01.exe
+D:\VSProjects2019\AlgorithmicEncryptor_01\bin\Debug\AlgorithmicEncryptor_01.pdb
+D:\VSProjects2019\AlgorithmicEncryptor_01\bin\Debug\Newtonsoft.Json.dll
+D:\VSProjects2019\AlgorithmicEncryptor_01\bin\Debug\Newtonsoft.Json.xml
+D:\VSProjects2019\AlgorithmicEncryptor_01\obj\Debug\AlgorithmicEncryptor_01.Form1.resources
+D:\VSProjects2019\AlgorithmicEncryptor_01\obj\Debug\AlgorithmicEncryptor_01.Properties.Resources.resources
+D:\VSProjects2019\AlgorithmicEncryptor_01\obj\Debug\AlgorithmicEncryptor_01.csproj.GenerateResource.cache
+D:\VSProjects2019\AlgorithmicEncryptor_01\obj\Debug\AlgorithmicEncryptor_01.csproj.CoreCompileInputs.cache
+D:\VSProjects2019\AlgorithmicEncryptor_01\obj\Debug\AlgorithmicEncryptor_01.csproj.CopyComplete
+D:\VSProjects2019\AlgorithmicEncryptor_01\obj\Debug\AlgorithmicEncryptor_01.exe
+D:\VSProjects2019\AlgorithmicEncryptor_01\obj\Debug\AlgorithmicEncryptor_01.pdb
