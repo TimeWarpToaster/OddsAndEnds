@@ -21,27 +21,27 @@ All of the text-fields are interactive. Meaning, you can make notes in keys. You
 <br />
 
 ### Current Key / Create Key
-<img src="./AlgorithmicEncryptor_01/Images/AE_1_CurrentKey.png"/>
+<img src="./Images/AE_1_CurrentKey.png"/>
 <br />
 
 ### Message In
-<img src="./AlgorithmicEncryptor_01/Images/AE_2_MessageIn.png" />
+<img src="./Images/AE_2_MessageIn.png" />
 <br />
 
 ### Message Numbers
-<img src="./AlgorithmicEncryptor_01/Images/AE_3_MessageNumbers.png" />
+<img src="./Images/AE_3_MessageNumbers.png" />
 <br />
 
 ### Numbers Math
-<img src="./AlgorithmicEncryptor_01/Images/AE_4_MessageMath.png" />
+<img src="./Images/AE_4_MessageMath.png" />
 <br />
 
 ### Math Encoded
-<img src="./AlgorithmicEncryptor_01/Images/AE_5_MessageEncoded.png" />
+<img src="./Images/AE_5_MessageEncoded.png" />
 <br />
 
 ### Message Decoded
-<img src="./AlgorithmicEncryptor_01/Images/AE_6_MessageDecoded.png" />
+<img src="./Images/AE_6_MessageDecoded.png" />
 <br />
 <br />
 
