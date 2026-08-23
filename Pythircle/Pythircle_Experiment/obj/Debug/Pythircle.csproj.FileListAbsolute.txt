@@ -1,0 +1,9 @@
+D:\VSProjects2019\Pythircle\bin\Debug\Pythircle.exe
+D:\VSProjects2019\Pythircle\bin\Debug\Pythircle.pdb
+D:\VSProjects2019\Pythircle\obj\Debug\Pythircle.csproj.AssemblyReference.cache
+D:\VSProjects2019\Pythircle\obj\Debug\Pythircle.Form1.resources
+D:\VSProjects2019\Pythircle\obj\Debug\Pythircle.Properties.Resources.resources
+D:\VSProjects2019\Pythircle\obj\Debug\Pythircle.csproj.GenerateResource.cache
+D:\VSProjects2019\Pythircle\obj\Debug\Pythircle.csproj.CoreCompileInputs.cache
+D:\VSProjects2019\Pythircle\obj\Debug\Pythircle.exe
+D:\VSProjects2019\Pythircle\obj\Debug\Pythircle.pdb
