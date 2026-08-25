@@ -1,0 +1,8 @@
+D:\VSProjects2019\Rtb_RichTextBox_WFA_Helper\bin\Debug\Rtb_RichTextBox_WFA_Helper.exe
+D:\VSProjects2019\Rtb_RichTextBox_WFA_Helper\bin\Debug\Rtb_RichTextBox_WFA_Helper.pdb
+D:\VSProjects2019\Rtb_RichTextBox_WFA_Helper\obj\Debug\Rtb_RichTextBox_WFA_Helper.Form1.resources
+D:\VSProjects2019\Rtb_RichTextBox_WFA_Helper\obj\Debug\Rtb_RichTextBox_WFA_Helper.Properties.Resources.resources
+D:\VSProjects2019\Rtb_RichTextBox_WFA_Helper\obj\Debug\Rtb_RichTextBox_WFA_Helper.csproj.GenerateResource.cache
+D:\VSProjects2019\Rtb_RichTextBox_WFA_Helper\obj\Debug\Rtb_RichTextBox_WFA_Helper.csproj.CoreCompileInputs.cache
+D:\VSProjects2019\Rtb_RichTextBox_WFA_Helper\obj\Debug\Rtb_RichTextBox_WFA_Helper.exe
+D:\VSProjects2019\Rtb_RichTextBox_WFA_Helper\obj\Debug\Rtb_RichTextBox_WFA_Helper.pdb
