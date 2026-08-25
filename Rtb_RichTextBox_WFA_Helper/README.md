@@ -36,7 +36,6 @@ To add a Rtb helper to your code, do something like:
 </pre>
 
 
-
 ### Align Text
 
 To align text, either pass in the string with an alignment option from HorizontalAlignment, or pass the length of the most recently appended string. For alignment to work properly, it is assumed what is being passed is a line, not a partial line. Manage your line breaks before and after calling align.
