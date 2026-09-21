@@ -1,0 +1,11 @@
+D:\VSProjects2019\ImageRegionAnalysis2\bin\Debug\ImageRegionAnalysis2.exe
+D:\VSProjects2019\ImageRegionAnalysis2\bin\Debug\ImageRegionAnalysis2.pdb
+D:\VSProjects2019\ImageRegionAnalysis2\bin\Debug\Newtonsoft.Json.dll
+D:\VSProjects2019\ImageRegionAnalysis2\bin\Debug\Newtonsoft.Json.xml
+D:\VSProjects2019\ImageRegionAnalysis2\obj\Debug\ImageRegionAnalysis2.Form1.resources
+D:\VSProjects2019\ImageRegionAnalysis2\obj\Debug\ImageRegionAnalysis2.Properties.Resources.resources
+D:\VSProjects2019\ImageRegionAnalysis2\obj\Debug\ImageRegionAnalysis2.csproj.GenerateResource.cache
+D:\VSProjects2019\ImageRegionAnalysis2\obj\Debug\ImageRegionAnalysis2.csproj.CoreCompileInputs.cache
+D:\VSProjects2019\ImageRegionAnalysis2\obj\Debug\ImageRegionAnalysis2.csproj.CopyComplete
+D:\VSProjects2019\ImageRegionAnalysis2\obj\Debug\ImageRegionAnalysis2.exe
+D:\VSProjects2019\ImageRegionAnalysis2\obj\Debug\ImageRegionAnalysis2.pdb
