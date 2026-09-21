@@ -119,4 +119,4 @@ The result, is each set of character subregion counts, effectively forms its own
 <br />
 <br />
 
-This concludes a very-basic introduction into the concept of regions, and bits of how they can be applied to solving problems for the visual interpretation of data.
+EOF
