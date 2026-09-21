@@ -106,7 +106,7 @@ When using a character region, and 35-subregions to describe the character, a si
 
 To do a more direct comparison, to not generalizing data, a character described above with 10-integer counters, would:
 
-Take 320,000-bytes as 10-int counters concerning each pixel
+Take 32,000-bytes as 10-int counters concerning each pixel
 
  OR 
 
