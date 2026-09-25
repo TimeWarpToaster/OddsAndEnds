@@ -313,6 +313,10 @@ TT:
  5: 2(4) - 100% of TT's
 </pre>
 
+## An Aside
+
+I apologize now if anything posted is not 100% correct to the results. Due to a complexity that arose out of TT not separating cleanly, it would cause two characters to disappear from output (TT occurs twice in input, each time comes out as one in some fonts due to set-pixels touching). In order to properly value the results, I still went through this batch by-hand, to realign around missing / surplus characters in output.
+
 <br />
 <br />
 
