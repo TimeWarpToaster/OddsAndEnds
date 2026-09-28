@@ -17,16 +17,16 @@ An unsuccessful attempt was made, to ensure the image is counted as few-times-as
     4) Count character subregions
 </pre>
 
-As is plain already, some areas of the image are being counted at-least five time from the top-of-head. However, the stats are powerful. We will get more into counts later.
+As is plain already, some areas of the image are being counted at-least five times (counting from the top-of-head). However, the stats are powerful. We will get more into counts later.
 
 (there is supposed to be more here)
 
 
 ## Counts
 
-Counts are owned by a Region. This is not as simple as it seems. A Region also owns a List<List<Region>> to contain subregions. Each of these nested Regions also has a counts object. The counts of the region and the counts of the subregions serve distinct purposes. 
+Counts are owned by a Region. This is not as simple as it seems. A Region also owns a List\<List\<Region\>\> to contain subregions. Each of these nested Regions also has a counts object. The counts of the region and the counts of the subregions serve distinct purposes. 
 
-Region - This becomes important when the region is an entire character. Not all regions are worth formally counting, and may have a null counts or default values. For instance, a line is not worth carving up and counting directly, neither is a subregion.
+Region - This becomes important when the region is an entire character. Not all regions are worth formally counting, and may have a null counts or default values. For instance, a line is not worth carving up and counting directly, and a subregion is only worth counting and not splitting up further.
 
 Subregion - Characters are carved up into subregions. The number of subregions is changeable in code, but not yet configurable. Subregions of a character are counted independently, and the counts go back on the region object defining the subregion (not the character counts). Counting a subregion, is specifically for looking at one-area of a character image area. A logical-crop of a logical-crop, counted.
 
@@ -50,11 +50,11 @@ A Template, is effectively defined by counts, not pixel data. Specifically, the 
 
 This means a subregion of a character, has counts for top, left, etcetera. Not just the overall subregion totals. Consequently, because the character region is counted the same as a subregion, this means the current implementation also has perimeter data for subregions (not sure if this will prove useful, so leaving it until analyzed). While the purpose of subregioning, is to effectively reduce the character resolution greatly into greyscale (int counts), it is more like many greyscales comprised along many factors, without maintaining image data. To put this literally, the comprised subregions of a character, can be converted to a semi-unique low-resolution grey-scale image of the character, for each count value. These subregion data-points provide the basis for OCR. More-so, than overall character counts.
 
-Comparing counts is so common, specifically, comparing counts of the subregions List<List<Region>>, that it is worth have a counts.diff(inCounts); helper. A new counts object is created, containing the absolute difference for each count, of each subregion. Comparing the absolute difference of set and unset percentages, along with other factors, comprise the final result. Not yet added, is any formal weighting system. Lowest composite difference when compared against a template wins.
+Comparing counts is so common, specifically, comparing counts of the subregions List\<List\<Region\>\>, that it is worth having a counts.diff(inCounts); helper. A new counts object is created, containing the absolute difference for each count, of each subregion. Comparing the absolute difference of set and unset percentages, along with other factors, comprise the final result. Not yet added, is any formal weighting system. Lowest composite difference when compared against a template wins.
 
 Pixel-counts have little meaning or relevance, beyond the life of image data. A count has no concept of container-size. What a count can have, is a relative percent to the whole. Most variables of value in comparisons, have a "per..." alternate, stored as a percent. A short-term count variable named int myCounter, would have its long-term counterpart double perMyCounter defined as-well. At some-point, the template may be thinned, to do away with int values that lost meaning. For now, they are part of counts, and go with counts into the template.
 
-Perimeter counts are a List<int> where counts.blankLeft, is a count of unset pixels from the left perimeter in, before the first set pixel. Because it is left, and a value must exist for every row, the list is size-Y long. For counts.blankTop or blankBottom, the list of counts is size-X long. For percents, the perimeter counts are converted to a percent of their respective axis. Where blankLeft and blankRight are percent of width, blankTop and blankBottom percent of height.  
+Perimeter counts are a List\<int\> where counts.blankLeft, is a count of unset pixels from the left perimeter in, before the first set pixel. Because it is left, and a value must exist for every row, the list is size-Y long. For counts.blankTop or blankBottom, the list of counts is size-X long. For percents, the perimeter counts are converted to a percent of their respective axis. Where blankLeft and blankRight are percent of width, blankTop and blankBottom percent of height.  
 
 ## Templates
 
