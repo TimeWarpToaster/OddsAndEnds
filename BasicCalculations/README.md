@@ -8,6 +8,6 @@ For now, this folder contains two-files with the first 500,000 Triangular Number
 
 For reference, a triangular number is a number that can be arranged in a triangle. One popular example of a triangular number would be the 10-pins used for bowling. We can pretty easily determine that 1, 3, 6, and 10 are all able to form triangles, merely by arranging that number of items into successively shorter rows.
 
-There is not anything particularly complicated about calculating triangular numbers. Gauss produced a common equation, that is rooted in a triangle being half of a rectangle (not quite square):
+There is not anything particularly complicated about calculating triangular numbers. Gauss produced a common equation, that is rooted in a triangle being half of a rectangle (not quite square, the +1 ensures slightly larger in one direction, x 1/2 reduces the rectangle back into a triangle):
 
 1/2 * (N + 1) * N  =  The Nth triangular number 
