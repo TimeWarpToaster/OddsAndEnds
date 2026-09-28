@@ -18,14 +18,16 @@ namespace ImageRegionAnalysis2
         Dictionary<string, Dictionary<string, string>> readImages = new Dictionary<string, Dictionary<string, string>>();
         Dictionary<string, Dictionary<string, string>> fileTemplates = new Dictionary<string, Dictionary<string, string>>();
 
+        bool UseUnfinishedFonts = true;
+
         Bitmap workingBmp = null;
 
         Bits bits = null;
-        //List<int> xBreaks = new List<int> { 25, 25, 25, 25 };// 100 %
-        //List<int> yBreaks = new List<int> { 20, 20, 20, 20, 20 };// 100 %
+        List<int> xBreaks = new List<int> { 25, 25, 25, 25 };// 100 %
+        List<int> yBreaks = new List<int> { 20, 20, 20, 20, 20 };// 100 %
 
-        List<int> xBreaks = new List<int>() { 20, 20, 20, 20, 20 };// 100 %
-        List<int> yBreaks = new List<int>() { 14, 15, 14, 14, 14, 15, 14 };// 100 %
+        //List<int> xBreaks = new List<int>() { 20, 20, 20, 20, 20 };// 100 %
+        //List<int> yBreaks = new List<int>() { 14, 15, 14, 14, 14, 15, 14 };// 100 %
 
         //List<int> xBreaks = new List<int>() { 20, 20, 20, 20, 20 };// 100 %
         //List<int> yBreaks = new List<int>() { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 };// 100 %
@@ -87,11 +89,14 @@ namespace ImageRegionAnalysis2
                     this.knownImages = new Dictionary<string, string>();
                     this.readImages = new Dictionary<string, Dictionary<string, string>>();
 
-                    /*knownImages.Add("Arial Large", @".\Images\fARIAL_2.bmp");
-                    readImages.Add("Arial Large", new Dictionary<string, string>());
-                    readImages["Arial Large"].Add("Arial Large Upper", @".\Images\Read_ARIAL_2.bmp");
-                    fileTemplates.Add("Arial Large", new Dictionary<string, string>());
-                    fileTemplates["Arial Large"].Add("Arial Large 5x7 (1)", @".\Templates\ARIAL_2_5x7(1).tpl");*/
+                    if (UseUnfinishedFonts)
+                    {
+                        knownImages.Add("Arial Large", @".\Images\fARIAL_2.bmp");
+                        readImages.Add("Arial Large", new Dictionary<string, string>());
+                        readImages["Arial Large"].Add("Arial Large Upper", @".\Images\Read_ARIAL_2.bmp");
+                        //fileTemplates.Add("Arial Large", new Dictionary<string, string>());
+                        //fileTemplates["Arial Large"].Add("Arial Large 5x7 (1)", @".\Templates\ARIAL_2_5x7(1).tpl");
+                    }
 
                     knownImages.Add("Bahnschrift Large", @".\Images\fBAHNSCHRIFT_2.bmp");
                     readImages.Add("Bahnschrift Large", new Dictionary<string, string>());
@@ -99,11 +104,14 @@ namespace ImageRegionAnalysis2
                     //fileTemplates.Add("Bahnschrift Large", new Dictionary<string, string>());
                     //fileTemplates["Bahnschrift Large"].Add("Bahnschrift Large 5x7 (1)", @".\Templates\BAHNSCHRIFT_2_5x7(1).tpl");
 
-                    /*knownImages.Add("Calibri Large", @".\Images\fCALIBRI_2.bmp");
-                    readImages.Add("Calibri Large", new Dictionary<string, string>());
-                    readImages["Calibri Large"].Add("Calibri Large", @".\Images\Read_CALIBRI_2.bmp");
-                    fileTemplates.Add("Calibri Large", new Dictionary<string, string>());
-                    fileTemplates["Calibri Large"].Add("Calibri Large 5x7 (1)", @".\Templates\CALIBRI_2_5x7(1).tpl");*/
+                    if (UseUnfinishedFonts)
+                    {
+                        knownImages.Add("Calibri Large", @".\Images\fCALIBRI_2.bmp");
+                        readImages.Add("Calibri Large", new Dictionary<string, string>());
+                        readImages["Calibri Large"].Add("Calibri Large", @".\Images\Read_CALIBRI_2.bmp");
+                        //fileTemplates.Add("Calibri Large", new Dictionary<string, string>());
+                        //fileTemplates["Calibri Large"].Add("Calibri Large 5x7 (1)", @".\Templates\CALIBRI_2_5x7(1).tpl");
+                    }
 
                     knownImages.Add("Comic Sans Large", @".\Images\fCOMIC_SANS_2.bmp");
                     readImages.Add("Comic Sans Large", new Dictionary<string, string>());
@@ -129,23 +137,26 @@ namespace ImageRegionAnalysis2
                     //fileTemplates.Add("MS Sans Serif Large Large", new Dictionary<string, string>());
                     //fileTemplates["MS Sans Serif Large Large"].Add("MS Sans Serif Large 5x7 (1)", @".\Templates\MS_SANS_SERIF_2_5x7(1).tpl");
 
-                    /*knownImages.Add("Myanmar Text Large", @".\Images\fMYANMAR_TEXT_2.bmp");
-                    readImages.Add("Myanmar Text Large", new Dictionary<string, string>());
-                    readImages["Myanmar Text Large"].Add("Myanmar Text Large", @".\Images\Read_MYANMAR_TEXT_2.bmp");
-                    fileTemplates.Add(" Large", new Dictionary<string, string>());
-                    fileTemplates[" Large"].Add("Myanmar Text Large 5x7 (1)", @".\Templates\MYANMAR_TEXT_2_5x7(1).tpl");
+                    if (UseUnfinishedFonts)
+                    {
+                        knownImages.Add("Myanmar Text Large", @".\Images\fMYANMAR_TEXT_2.bmp");
+                        readImages.Add("Myanmar Text Large", new Dictionary<string, string>());
+                        readImages["Myanmar Text Large"].Add("Myanmar Text Large", @".\Images\Read_MYANMAR_TEXT_2.bmp");
+                        //fileTemplates.Add(" Large", new Dictionary<string, string>());
+                        //fileTemplates[" Large"].Add("Myanmar Text Large 5x7 (1)", @".\Templates\MYANMAR_TEXT_2_5x7(1).tpl");
 
-                    knownImages.Add("Tahoma Large", @".\Images\fTAHOMA_2.bmp");
-                    readImages.Add("Tahoma Large", new Dictionary<string, string>());
-                    readImages["Tahoma Large"].Add("Tahoma Large", @".\Images\Read_TAHOMA_2.bmp");
-                    fileTemplates.Add("Myanmar Text Large", new Dictionary<string, string>());
-                    fileTemplates["Myanmar Text Large"].Add("Tahoma Large 5x7 (1)", @".\Templates\_2_5x7(1).tpl");
+                        knownImages.Add("Tahoma Large", @".\Images\fTAHOMA_2.bmp");
+                        readImages.Add("Tahoma Large", new Dictionary<string, string>());
+                        readImages["Tahoma Large"].Add("Tahoma Large", @".\Images\Read_TAHOMA_2.bmp");
+                        //fileTemplates.Add("Myanmar Text Large", new Dictionary<string, string>());
+                        //fileTemplates["Myanmar Text Large"].Add("Tahoma Large 5x7 (1)", @".\Templates\_2_5x7(1).tpl");
 
-                    knownImages.Add("Times New Roman Large", @".\Images\fTIMES_NEW_ROMAN_2.bmp");
-                    readImages.Add("Times New Roman Large", new Dictionary<string, string>());
-                    readImages["Times New Roman Large"].Add("Times New Roman Large", @".\Images\Read_TIMES_NEW_ROMAN_2.bmp");
-                    fileTemplates.Add("Times New Roman Large", new Dictionary<string, string>());
-                    fileTemplates["Times New Roman Large"].Add("Times New Roman Large 5x7 (1)", @".\Templates\TIMES_NEW_ROMAN_2_5x7(1).tpl");*/
+                        knownImages.Add("Times New Roman Large", @".\Images\fTIMES_NEW_ROMAN_2.bmp");
+                        readImages.Add("Times New Roman Large", new Dictionary<string, string>());
+                        readImages["Times New Roman Large"].Add("Times New Roman Large", @".\Images\Read_TIMES_NEW_ROMAN_2.bmp");
+                        //fileTemplates.Add("Times New Roman Large", new Dictionary<string, string>());
+                        //fileTemplates["Times New Roman Large"].Add("Times New Roman Large 5x7 (1)", @".\Templates\TIMES_NEW_ROMAN_2_5x7(1).tpl");
+                    }
 
                     knownImages.Add("Veranda Large", @".\Images\fVERANDA_2.bmp");
                     readImages.Add("Veranda Large", new Dictionary<string, string>());
@@ -155,20 +166,22 @@ namespace ImageRegionAnalysis2
 
 
 
+                    if (UseUnfinishedFonts)
+                    {
+                        knownImages.Add("Arial Med", @".\Images\fARIAL_3.bmp");
+                        readImages.Add("Arial Med", new Dictionary<string, string>());
+                        readImages["Arial Med"].Add("Arial Med L", @".\Images\Read_ARIAL_3L.bmp");
+                        readImages["Arial Med"].Add("Arial Med U", @".\Images\Read_ARIAL_3U.bmp");
+                        //fileTemplates.Add("Arial Med", new Dictionary<string, string>());
+                        //fileTemplates["Arial Med"].Add("Arial Med 5x7 (1)", @".\Templates\ARIAL_3_5x7(1).tpl");
 
-                    /*knownImages.Add("Arial Med", @".\Images\fARIAL_3.bmp");
-                    readImages.Add("Arial Med", new Dictionary<string, string>());
-                    readImages["Arial Med"].Add("Arial Med L", @".\Images\Read_ARIAL_3L.bmp");
-                    readImages["Arial Med"].Add("Arial Med U", @".\Images\Read_ARIAL_3U.bmp");
-                    fileTemplates.Add("Arial Med", new Dictionary<string, string>());
-                    fileTemplates["Arial Med"].Add("Arial Med 5x7 (1)", @".\Templates\ARIAL_3_5x7(1).tpl");
-
-                    knownImages.Add("Bahnschrift Med", @".\Images\fBAHNSCHRIFT_3.bmp");
-                    readImages.Add("Bahnschrift Med", new Dictionary<string, string>());
-                    readImages["Bahnschrift Med"].Add("Bahnschrift Med L", @".\Images\Read_BAHNSCHRIFT_3L.bmp");
-                    readImages["Bahnschrift Med"].Add("Bahnschrift Med U", @".\Images\Read_BAHNSCHRIFT_3U.bmp");
-                    fileTemplates.Add("Bahnschrift Med", new Dictionary<string, string>());
-                    fileTemplates["Bahnschrift Med"].Add("Bahnschrift Med 5x7 (1)", @".\Templates\BAHNSCHRIFT_3_5x7(1).tpl");*/
+                        knownImages.Add("Bahnschrift Med", @".\Images\fBAHNSCHRIFT_3.bmp");
+                        readImages.Add("Bahnschrift Med", new Dictionary<string, string>());
+                        readImages["Bahnschrift Med"].Add("Bahnschrift Med L", @".\Images\Read_BAHNSCHRIFT_3L.bmp");
+                        readImages["Bahnschrift Med"].Add("Bahnschrift Med U", @".\Images\Read_BAHNSCHRIFT_3U.bmp");
+                        //fileTemplates.Add("Bahnschrift Med", new Dictionary<string, string>());
+                        //fileTemplates["Bahnschrift Med"].Add("Bahnschrift Med 5x7 (1)", @".\Templates\BAHNSCHRIFT_3_5x7(1).tpl");
+                    }
 
                     knownImages.Add("Calibri Med", @".\Images\fCALIBRI_3.bmp");
                     readImages.Add("Calibri Med", new Dictionary<string, string>());
@@ -184,12 +197,15 @@ namespace ImageRegionAnalysis2
                     //fileTemplates.Add("Comic Sans Med", new Dictionary<string, string>());
                     //fileTemplates["Comic Sans Med"].Add("Comic Sans Med 5x7 (1)", @".\Templates\COMIC_SANS_3_5x7(1).tpl");
 
-                    /*knownImages.Add("Courier New Med", @".\Images\fCOURIER_NEW_3.bmp");
-                    readImages.Add("Courier New Med", new Dictionary<string, string>());
-                    readImages["Courier New Med"].Add("Courier New Med L", @".\Images\Read_COURIER_NEW_3L.bmp");
-                    readImages["Courier New Med"].Add("Courier New Med U", @".\Images\Read_COURIER_NEW_3U.bmp");
-                    fileTemplates.Add("Courier New Med", new Dictionary<string, string>());
-                    fileTemplates["Courier New Med"].Add("Courier New Med 5x7 (1)", @".\Templates\COURIER_NEW_3_5x7(1).tpl");*/
+                    if (UseUnfinishedFonts)
+                    {
+                        knownImages.Add("Courier New Med", @".\Images\fCOURIER_NEW_3.bmp");
+                        readImages.Add("Courier New Med", new Dictionary<string, string>());
+                        readImages["Courier New Med"].Add("Courier New Med L", @".\Images\Read_COURIER_NEW_3L.bmp");
+                        readImages["Courier New Med"].Add("Courier New Med U", @".\Images\Read_COURIER_NEW_3U.bmp");
+                        //fileTemplates.Add("Courier New Med", new Dictionary<string, string>());
+                        //fileTemplates["Courier New Med"].Add("Courier New Med 5x7 (1)", @".\Templates\COURIER_NEW_3_5x7(1).tpl");
+                    }
 
                     knownImages.Add("Lucida Console Med", @".\Images\fLUCIDA_CONSOLE_3.bmp");
                     readImages.Add("Lucida Console Med", new Dictionary<string, string>());
@@ -198,33 +214,36 @@ namespace ImageRegionAnalysis2
                     //fileTemplates.Add("Lucida Console Med", new Dictionary<string, string>());
                     //fileTemplates["Lucida Console Med"].Add("Lucida Console Med 5x7 (1)", @".\Templates\LUCIDA_CONSOLE_3_5x7(1).tpl");
 
-                    /*knownImages.Add("MS Sans Serif Med", @".\Images\fMS_SANS_SERIF_3.bmp");
-                    readImages.Add("MS Sans Serif Med", new Dictionary<string, string>());
-                    readImages["MS Sans Serif Med"].Add("MS Sans Serif Med L", @".\Images\Read_MS_SANS_SERIF_3L.bmp");
-                    readImages["MS Sans Serif Med"].Add("MS Sans Serif Med U", @".\Images\Read_MS_SANS_SERIF_3U.bmp");
-                    fileTemplates.Add("MS Sans Serif Med", new Dictionary<string, string>());
-                    fileTemplates["MS Sans Serif Med"].Add("MS Sans Serif Med 5x7 (1)", @".\Templates\MS_SANS_SERIF_3_5x7(1).tpl");
+                    if (UseUnfinishedFonts)
+                    {
+                        knownImages.Add("MS Sans Serif Med", @".\Images\fMS_SANS_SERIF_3.bmp");
+                        readImages.Add("MS Sans Serif Med", new Dictionary<string, string>());
+                        readImages["MS Sans Serif Med"].Add("MS Sans Serif Med L", @".\Images\Read_MS_SANS_SERIF_3L.bmp");
+                        readImages["MS Sans Serif Med"].Add("MS Sans Serif Med U", @".\Images\Read_MS_SANS_SERIF_3U.bmp");
+                        //fileTemplates.Add("MS Sans Serif Med", new Dictionary<string, string>());
+                        //fileTemplates["MS Sans Serif Med"].Add("MS Sans Serif Med 5x7 (1)", @".\Templates\MS_SANS_SERIF_3_5x7(1).tpl");
 
-                    knownImages.Add("Myanmar Text Med", @".\Images\fMYANMAR_TEXT_3.bmp");
-                    readImages.Add("Myanmar Text Med", new Dictionary<string, string>());
-                    readImages["Myanmar Text Med"].Add("Myanmar Text Med L", @".\Images\Read_MYANMAR_TEXT_3L.bmp");
-                    readImages["Myanmar Text Med"].Add("Myanmar Text Med U", @".\Images\Read_MYANMAR_TEXT_3U.bmp");
-                    fileTemplates.Add("Myanmar Text Med", new Dictionary<string, string>());
-                    fileTemplates["Myanmar Text Med"].Add("Myanmar Text Med 5x7 (1)", @".\Templates\MYANMAR_TEXT_3_5x7(1).tpl");
+                        knownImages.Add("Myanmar Text Med", @".\Images\fMYANMAR_TEXT_3.bmp");
+                        readImages.Add("Myanmar Text Med", new Dictionary<string, string>());
+                        readImages["Myanmar Text Med"].Add("Myanmar Text Med L", @".\Images\Read_MYANMAR_TEXT_3L.bmp");
+                        readImages["Myanmar Text Med"].Add("Myanmar Text Med U", @".\Images\Read_MYANMAR_TEXT_3U.bmp");
+                        //fileTemplates.Add("Myanmar Text Med", new Dictionary<string, string>());
+                        //fileTemplates["Myanmar Text Med"].Add("Myanmar Text Med 5x7 (1)", @".\Templates\MYANMAR_TEXT_3_5x7(1).tpl");
 
-                    knownImages.Add("Tahoma Med", @".\Images\fTAHOMA_3.bmp");
-                    readImages.Add("Tahoma Med", new Dictionary<string, string>());
-                    readImages["Tahoma Med"].Add("Tahoma Med L", @".\Images\Read_TAHOMA_3L.bmp");
-                    readImages["Tahoma Med"].Add("Tahoma Med U", @".\Images\Read_TAHOMA_3U.bmp");
-                    fileTemplates.Add("Tahoma Med", new Dictionary<string, string>());
-                    fileTemplates["Tahoma Med"].Add("Tahoma Med 5x7 (1)", @".\Templates\TAHOMA_3_5x7(1).tpl");
+                        knownImages.Add("Tahoma Med", @".\Images\fTAHOMA_3.bmp");
+                        readImages.Add("Tahoma Med", new Dictionary<string, string>());
+                        readImages["Tahoma Med"].Add("Tahoma Med L", @".\Images\Read_TAHOMA_3L.bmp");
+                        readImages["Tahoma Med"].Add("Tahoma Med U", @".\Images\Read_TAHOMA_3U.bmp");
+                        //fileTemplates.Add("Tahoma Med", new Dictionary<string, string>());
+                        //fileTemplates["Tahoma Med"].Add("Tahoma Med 5x7 (1)", @".\Templates\TAHOMA_3_5x7(1).tpl");
 
-                    knownImages.Add("Times New Roman Med", @".\Images\fTIMES_NEW_ROMAN_3.bmp");
-                    readImages.Add("Times New Roman Med", new Dictionary<string, string>());
-                    readImages["Times New Roman Med"].Add("Times New Roman Med L", @".\Images\Read_TIMES_NEW_ROMAN_3L.bmp");
-                    readImages["Times New Roman Med"].Add("Times New Roman Med U", @".\Images\Read_TIMES_NEW_ROMAN_3U.bmp");
-                    fileTemplates.Add("Times New Roman Med", new Dictionary<string, string>());
-                    fileTemplates["Times New Roman Med"].Add("Times New Roman Med 5x7 (1)", @".\Templates\TIMES_NEW_ROMAN_3_5x7(1).tpl");*/
+                        knownImages.Add("Times New Roman Med", @".\Images\fTIMES_NEW_ROMAN_3.bmp");
+                        readImages.Add("Times New Roman Med", new Dictionary<string, string>());
+                        readImages["Times New Roman Med"].Add("Times New Roman Med L", @".\Images\Read_TIMES_NEW_ROMAN_3L.bmp");
+                        readImages["Times New Roman Med"].Add("Times New Roman Med U", @".\Images\Read_TIMES_NEW_ROMAN_3U.bmp");
+                        //fileTemplates.Add("Times New Roman Med", new Dictionary<string, string>());
+                        //fileTemplates["Times New Roman Med"].Add("Times New Roman Med 5x7 (1)", @".\Templates\TIMES_NEW_ROMAN_3_5x7(1).tpl");
+                    }
 
                     knownImages.Add("Veranda Med", @".\Images\fVERANDA_3.bmp");
                     readImages.Add("Veranda Med", new Dictionary<string, string>());
@@ -236,52 +255,52 @@ namespace ImageRegionAnalysis2
 
 
 
+                    if (UseUnfinishedFonts)
+                    {
+                        knownImages.Add("Arial Min", @".\Images\fARIAL_1.bmp");
+                        //fileTemplates.Add("Arial Min", new Dictionary<string, string>());
+                        //fileTemplates["Arial Min"].Add("Arial Min 4x5 (1)", @".\Templates\ARIAL_1_4x5(1).tpl");
 
-                    /*
-                    knownImages.Add("Arial Min", @".\Images\fARIAL_1.bmp");
-                    fileTemplates.Add("Arial Min", new Dictionary<string, string>());
-                    fileTemplates["Arial Min"].Add("Arial Min 4x5 (1)", @".\Templates\ARIAL_1_4x5(1).tpl");
+                        knownImages.Add("Bahnschrift Min", @".\Images\fBAHNSCHRIFT_1.bmp");
+                        //fileTemplates.Add("Bahnschrift Min", new Dictionary<string, string>());
+                        //fileTemplates["Bahnschrift Min"].Add("Bahnschrift Min 4x5 (1)", @".\Templates\BAHNSCHRIFT_1_4x5(1).tpl");
 
-                    knownImages.Add("Bahnschrift Min", @".\Images\fBAHNSCHRIFT_1.bmp");
-                    fileTemplates.Add("Bahnschrift Min", new Dictionary<string, string>());
-                    fileTemplates["Bahnschrift Min"].Add("Bahnschrift Min 4x5 (1)", @".\Templates\BAHNSCHRIFT_1_4x5(1).tpl");
+                        knownImages.Add("Calibri Min", @".\Images\fCALIBRI_1.bmp");
+                        //fileTemplates.Add("Calibri Min", new Dictionary<string, string>());
+                        //fileTemplates["Calibri Min"].Add("Calibri Min 4x5 (1)", @".\Templates\CALIBRI_1_4x5(1).tpl");
 
-                    knownImages.Add("Calibri Min", @".\Images\fCALIBRI_1.bmp");
-                    fileTemplates.Add("Calibri Min", new Dictionary<string, string>());
-                    fileTemplates["Calibri Min"].Add("Calibri Min 4x5 (1)", @".\Templates\CALIBRI_1_4x5(1).tpl");
+                        knownImages.Add("Comic Sans Min", @".\Images\fCOMIC_SANS_1.bmp");
+                        //fileTemplates.Add("Comic Sans Min", new Dictionary<string, string>());
+                        //fileTemplates["Comic Sans Min"].Add("Comic Sans Min 4x5 (1)", @".\Templates\COMIC_SANS_1_4x5(1).tpl");
 
-                    knownImages.Add("Comic Sans Min", @".\Images\fCOMIC_SANS_1.bmp");
-                    fileTemplates.Add("Comic Sans Min", new Dictionary<string, string>());
-                    fileTemplates["Comic Sans Min"].Add("Comic Sans Min 4x5 (1)", @".\Templates\COMIC_SANS_1_4x5(1).tpl");
+                        knownImages.Add("Courier New Min", @".\Images\fCOURIER_NEW_1.bmp");
+                        //fileTemplates.Add("Courier New Min", new Dictionary<string, string>());
+                        //fileTemplates["Courier New Min"].Add("Courier New Min 4x5 (1)", @".\Templates\COURIER_NEW_1_4x5(1).tpl");
 
-                    knownImages.Add("Courier New Min", @".\Images\fCOURIER_NEW_1.bmp");
-                    fileTemplates.Add("Courier New Min", new Dictionary<string, string>());
-                    fileTemplates["Courier New Min"].Add("Courier New Min 4x5 (1)", @".\Templates\COURIER_NEW_1_4x5(1).tpl");
+                        knownImages.Add("Lucida Console Min", @".\Images\fLUCIDA_CONSOLE_1.bmp");
+                        //fileTemplates.Add("Lucida Console Min", new Dictionary<string, string>());
+                        //fileTemplates["Lucida Console Min"].Add("Lucida Console Min 4x5 (1)", @".\Templates\LUCIDA_CONSOLE_1_4x5(1).tpl");
 
-                    knownImages.Add("Lucida Console Min", @".\Images\fLUCIDA_CONSOLE_1.bmp");
-                    fileTemplates.Add("Lucida Console Min", new Dictionary<string, string>());
-                    fileTemplates["Lucida Console Min"].Add("Lucida Console Min 4x5 (1)", @".\Templates\LUCIDA_CONSOLE_1_4x5(1).tpl");
+                        knownImages.Add("MS Sans Serif Min", @".\Images\fMS_SANS_SERIF_1.bmp");
+                        //fileTemplates.Add("MS Sans Serif Min", new Dictionary<string, string>());
+                        //fileTemplates["MS Sans Serif Min"].Add("MS Sans Serif Min 4x5 (1)", @".\Templates\MS_SANS_SERIF_1_4x5(1).tpl");
 
-                    knownImages.Add("MS Sans Serif Min", @".\Images\fMS_SANS_SERIF_1.bmp");
-                    fileTemplates.Add("MS Sans Serif Min", new Dictionary<string, string>());
-                    fileTemplates["MS Sans Serif Min"].Add("MS Sans Serif Min 4x5 (1)", @".\Templates\MS_SANS_SERIF_1_4x5(1).tpl");
+                        knownImages.Add("Myanmar Text Min", @".\Images\fMYANMAR_TEXT_1.bmp");
+                        //fileTemplates.Add("Myanmar Text Min", new Dictionary<string, string>());
+                        //fileTemplates["Myanmar Text Min"].Add("Myanmar Text Min 4x5 (1)", @".\Templates\MYANMAR_TEXT_1_4x5(1).tpl");
 
-                    knownImages.Add("Myanmar Text Min", @".\Images\fMYANMAR_TEXT_1.bmp");
-                    fileTemplates.Add("Myanmar Text Min", new Dictionary<string, string>());
-                    fileTemplates["Myanmar Text Min"].Add("Myanmar Text Min 4x5 (1)", @".\Templates\MYANMAR_TEXT_1_4x5(1).tpl");
+                        knownImages.Add("Tahoma Min", @".\Images\fTAHOMA_1.bmp");
+                        //fileTemplates.Add("Tahoma Min", new Dictionary<string, string>());
+                        //fileTemplates["Tahoma Min"].Add("Tahoma Min 4x5 (1)", @".\Templates\TAHOMA_1_4x5(1).tpl");
 
-                    knownImages.Add("Tahoma Min", @".\Images\fTAHOMA_1.bmp");
-                    fileTemplates.Add("Tahoma Min", new Dictionary<string, string>());
-                    fileTemplates["Tahoma Min"].Add("Tahoma Min 4x5 (1)", @".\Templates\TAHOMA_1_4x5(1).tpl");
+                        knownImages.Add("Times New Roman Min", @".\Images\fTIMES_NEW_ROMAN_1.bmp");
+                        //fileTemplates.Add("Times New Roman Min", new Dictionary<string, string>());
+                        //fileTemplates["Times New Roman Min"].Add("Times New Roman Min 4x5 (1)", @".\Templates\TIMES_NEW_ROMAN_1_4x5(1).tpl");
 
-                    knownImages.Add("Times New Roman Min", @".\Images\fTIMES_NEW_ROMAN_1.bmp");
-                    fileTemplates.Add("Times New Roman Min", new Dictionary<string, string>());
-                    fileTemplates["Times New Roman Min"].Add("Times New Roman Min 4x5 (1)", @".\Templates\TIMES_NEW_ROMAN_1_4x5(1).tpl");
-
-                    knownImages.Add("Veranda Min", @".\Images\fVERANDA_1.bmp");
-                    fileTemplates.Add("Veranda Min", new Dictionary<string, string>());
-                    fileTemplates["Veranda Min"].Add("Veranda Min 4x5 (1)", @".\Templates\VERANDA_1_4x5(1).tpl");
-                    */
+                        knownImages.Add("Veranda Min", @".\Images\fVERANDA_1.bmp");
+                        //fileTemplates.Add("Veranda Min", new Dictionary<string, string>());
+                        //fileTemplates["Veranda Min"].Add("Veranda Min 4x5 (1)", @".\Templates\VERANDA_1_4x5(1).tpl");
+                    }
                 }
 
                 // Init font selection
@@ -328,7 +347,7 @@ namespace ImageRegionAnalysis2
                     }
                 }
 
-                if (this.comboKnownTemplates == null)
+                /*if (this.comboKnownTemplates == null)
                 {
                     L.err(location, "Known templates combobox was null.");
                     cntErrors++;
@@ -343,9 +362,9 @@ namespace ImageRegionAnalysis2
                             comboKnownTemplates.Items.Add(kvTemplate.Key);
                         }
                     }
-                }
+                }*/
 
-                //tbRegionsTemplatePath.Text = @".\Templates\FontTemplate_CALIBRI_2.json";
+                tbRegionsTemplatePath.Text = @".\Templates\FontTemplate.json";
                 //tbReadTextImageFile.Text = @".\Images\Read_CALIBRI_2.bmp";
 
                 // Force timing of all events at boot
@@ -1387,6 +1406,56 @@ namespace ImageRegionAnalysis2
                     pbReadTextImage.Image = bmp;
                     retVal = true;// TODO - Move result lower
                 }
+            }
+            catch (Exception ex)
+            {
+                L.ex(location, ex);
+            }
+            return retVal;
+        }
+
+        public bool performExperiment()
+        {
+            const string location = CLASSNAME + ".performExperiment";
+            bool retVal = false;
+            try
+            {
+                L.l(location, "Starting experiment.");
+                if (this.bits == null)
+                {
+                    L.err(location, "Ensure data is created before experiment.");
+                    return retVal;
+                }
+                if (!this.bits.linesFromBits())
+                {
+                    L.err(location, "Failed to identify text rows.");
+                    return retVal;
+                }
+                if (this.bits.textRows == null || this.bits.textRows.Count == 0)
+                {
+                    L.err(location, "Failed to get rows.");
+                    return retVal;
+                }
+
+                //List<Region> firstCharacter = this.bits.pryCharacters(this.bits.textRows[0]);
+
+
+                List<int> split = U.findFirstObject(this.bits, this.bits.textRows[0], U.DIRECTION.RIGHT, true);
+
+
+                Bitmap bmp = this.bits.toBitmap();
+
+                int maskErrors = U.maskToBitmap(split, ref bmp, Color.Blue);
+
+                if (maskErrors > 0) L.err(location, "Encountered (" + maskErrors + ") data or offset errors.");
+
+                if (!Ui.Set(pbExperiment, bmp))
+                {
+                    L.err(location, "Failed to publish image to UI.");
+                }
+
+
+                L.l(location, "Experiment finished.");
             }
             catch (Exception ex)
             {
@@ -3691,6 +3760,23 @@ namespace ImageRegionAnalysis2
                 if (!selectKnownTemplate())
                 {
                     L.err(location, "Failed to ready template path.");
+                }
+            }
+            catch (Exception ex)
+            {
+                L.ex(location, ex);
+            }
+        }
+
+        private void btnExperiment_Click(object sender, EventArgs e)
+        {
+            const string location = CLASSNAME + ".btnExperiment_Click";
+            try
+            {
+                L.l(location, "Performing experiment from button click.");
+                if (!this.performExperiment())
+                {
+                    L.err(location, "Failed to complete experiment.");
                 }
             }
             catch (Exception ex)

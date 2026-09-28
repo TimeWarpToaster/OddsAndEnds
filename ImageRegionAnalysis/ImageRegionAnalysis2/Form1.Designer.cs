@@ -36,6 +36,10 @@ namespace ImageRegionAnalysis2
             this.tabMain = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.pnlMainOptions = new System.Windows.Forms.Panel();
+            this.comboKnownTemplates = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.comboReadImages = new System.Windows.Forms.ComboBox();
+            this.lblReadImages = new System.Windows.Forms.Label();
             this.numRgbThresh = new System.Windows.Forms.NumericUpDown();
             this.lblRgbThresh = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -68,6 +72,7 @@ namespace ImageRegionAnalysis2
             this.tabsRegions = new System.Windows.Forms.TabControl();
             this.tabRegionCounts = new System.Windows.Forms.TabPage();
             this.splitContainer9 = new System.Windows.Forms.SplitContainer();
+            this.cbSaveTemplatePretty = new System.Windows.Forms.CheckBox();
             this.tbRegionsTemplatePath = new System.Windows.Forms.TextBox();
             this.btnRegionsLoadTemplates = new System.Windows.Forms.Button();
             this.btnRegionsSaveTemplates = new System.Windows.Forms.Button();
@@ -120,11 +125,10 @@ namespace ImageRegionAnalysis2
             this.splitContainer15 = new System.Windows.Forms.SplitContainer();
             this.lbTimingOutput = new System.Windows.Forms.ListBox();
             this.gridTimingOutput = new System.Windows.Forms.DataGridView();
-            this.lblReadImages = new System.Windows.Forms.Label();
-            this.comboReadImages = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.comboKnownTemplates = new System.Windows.Forms.ComboBox();
-            this.cbSaveTemplatePretty = new System.Windows.Forms.CheckBox();
+            this.tabExperiment = new System.Windows.Forms.TabPage();
+            this.splitContainer16 = new System.Windows.Forms.SplitContainer();
+            this.pbExperiment = new System.Windows.Forms.PictureBox();
+            this.btnExperiment = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -211,6 +215,12 @@ namespace ImageRegionAnalysis2
             this.splitContainer15.Panel2.SuspendLayout();
             this.splitContainer15.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridTimingOutput)).BeginInit();
+            this.tabExperiment.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer16)).BeginInit();
+            this.splitContainer16.Panel1.SuspendLayout();
+            this.splitContainer16.Panel2.SuspendLayout();
+            this.splitContainer16.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbExperiment)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -250,6 +260,7 @@ namespace ImageRegionAnalysis2
             this.tabControl1.Controls.Add(this.tabFindLines);
             this.tabControl1.Controls.Add(this.tabLogs);
             this.tabControl1.Controls.Add(this.tabTiming);
+            this.tabControl1.Controls.Add(this.tabExperiment);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(0, 28);
@@ -308,6 +319,52 @@ namespace ImageRegionAnalysis2
             this.pnlMainOptions.Name = "pnlMainOptions";
             this.pnlMainOptions.Size = new System.Drawing.Size(300, 743);
             this.pnlMainOptions.TabIndex = 0;
+            // 
+            // comboKnownTemplates
+            // 
+            this.comboKnownTemplates.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboKnownTemplates.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboKnownTemplates.FormattingEnabled = true;
+            this.comboKnownTemplates.Location = new System.Drawing.Point(48, 454);
+            this.comboKnownTemplates.Name = "comboKnownTemplates";
+            this.comboKnownTemplates.Size = new System.Drawing.Size(220, 28);
+            this.comboKnownTemplates.TabIndex = 12;
+            this.comboKnownTemplates.SelectedValueChanged += new System.EventHandler(this.comboKnownTemplates_SelectedValueChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("OCR A Extended", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Chartreuse;
+            this.label4.Location = new System.Drawing.Point(32, 433);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(188, 18);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Known Templates:  ";
+            // 
+            // comboReadImages
+            // 
+            this.comboReadImages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboReadImages.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboReadImages.FormattingEnabled = true;
+            this.comboReadImages.Location = new System.Drawing.Point(48, 382);
+            this.comboReadImages.Name = "comboReadImages";
+            this.comboReadImages.Size = new System.Drawing.Size(220, 28);
+            this.comboReadImages.TabIndex = 10;
+            this.comboReadImages.SelectedValueChanged += new System.EventHandler(this.comboReadImages_SelectedValueChanged);
+            // 
+            // lblReadImages
+            // 
+            this.lblReadImages.AutoSize = true;
+            this.lblReadImages.Font = new System.Drawing.Font("OCR A Extended", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblReadImages.ForeColor = System.Drawing.Color.Chartreuse;
+            this.lblReadImages.Location = new System.Drawing.Point(32, 361);
+            this.lblReadImages.Name = "lblReadImages";
+            this.lblReadImages.Size = new System.Drawing.Size(148, 18);
+            this.lblReadImages.TabIndex = 9;
+            this.lblReadImages.Text = "Read Images:  ";
             // 
             // numRgbThresh
             // 
@@ -737,6 +794,20 @@ namespace ImageRegionAnalysis2
             this.splitContainer9.Size = new System.Drawing.Size(1483, 706);
             this.splitContainer9.SplitterDistance = 105;
             this.splitContainer9.TabIndex = 0;
+            // 
+            // cbSaveTemplatePretty
+            // 
+            this.cbSaveTemplatePretty.AutoSize = true;
+            this.cbSaveTemplatePretty.Checked = true;
+            this.cbSaveTemplatePretty.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbSaveTemplatePretty.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbSaveTemplatePretty.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.cbSaveTemplatePretty.Location = new System.Drawing.Point(1193, 71);
+            this.cbSaveTemplatePretty.Name = "cbSaveTemplatePretty";
+            this.cbSaveTemplatePretty.Size = new System.Drawing.Size(126, 22);
+            this.cbSaveTemplatePretty.TabIndex = 4;
+            this.cbSaveTemplatePretty.Text = "Save As Pretty";
+            this.cbSaveTemplatePretty.UseVisualStyleBackColor = true;
             // 
             // tbRegionsTemplatePath
             // 
@@ -1407,65 +1478,53 @@ namespace ImageRegionAnalysis2
             this.gridTimingOutput.Size = new System.Drawing.Size(213, 621);
             this.gridTimingOutput.TabIndex = 0;
             // 
-            // lblReadImages
+            // tabExperiment
             // 
-            this.lblReadImages.AutoSize = true;
-            this.lblReadImages.Font = new System.Drawing.Font("OCR A Extended", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblReadImages.ForeColor = System.Drawing.Color.Chartreuse;
-            this.lblReadImages.Location = new System.Drawing.Point(32, 361);
-            this.lblReadImages.Name = "lblReadImages";
-            this.lblReadImages.Size = new System.Drawing.Size(148, 18);
-            this.lblReadImages.TabIndex = 9;
-            this.lblReadImages.Text = "Read Images:  ";
+            this.tabExperiment.Controls.Add(this.splitContainer16);
+            this.tabExperiment.Location = new System.Drawing.Point(4, 25);
+            this.tabExperiment.Name = "tabExperiment";
+            this.tabExperiment.Padding = new System.Windows.Forms.Padding(3);
+            this.tabExperiment.Size = new System.Drawing.Size(1503, 747);
+            this.tabExperiment.TabIndex = 8;
+            this.tabExperiment.Text = "Experiment";
+            this.tabExperiment.UseVisualStyleBackColor = true;
             // 
-            // comboReadImages
+            // splitContainer16
             // 
-            this.comboReadImages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboReadImages.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboReadImages.FormattingEnabled = true;
-            this.comboReadImages.Location = new System.Drawing.Point(48, 382);
-            this.comboReadImages.Name = "comboReadImages";
-            this.comboReadImages.Size = new System.Drawing.Size(220, 28);
-            this.comboReadImages.TabIndex = 10;
-            this.comboReadImages.SelectedValueChanged += new System.EventHandler(this.comboReadImages_SelectedValueChanged);
+            this.splitContainer16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer16.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer16.Name = "splitContainer16";
             // 
-            // label4
+            // splitContainer16.Panel1
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("OCR A Extended", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.Chartreuse;
-            this.label4.Location = new System.Drawing.Point(32, 433);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(188, 18);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "Known Templates:  ";
+            this.splitContainer16.Panel1.Controls.Add(this.btnExperiment);
             // 
-            // comboKnownTemplates
+            // splitContainer16.Panel2
             // 
-            this.comboKnownTemplates.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboKnownTemplates.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboKnownTemplates.FormattingEnabled = true;
-            this.comboKnownTemplates.Location = new System.Drawing.Point(48, 454);
-            this.comboKnownTemplates.Name = "comboKnownTemplates";
-            this.comboKnownTemplates.Size = new System.Drawing.Size(220, 28);
-            this.comboKnownTemplates.TabIndex = 12;
-            this.comboKnownTemplates.SelectedValueChanged += new System.EventHandler(this.comboKnownTemplates_SelectedValueChanged);
+            this.splitContainer16.Panel2.AutoScroll = true;
+            this.splitContainer16.Panel2.Controls.Add(this.pbExperiment);
+            this.splitContainer16.Size = new System.Drawing.Size(1497, 741);
+            this.splitContainer16.SplitterDistance = 253;
+            this.splitContainer16.TabIndex = 0;
             // 
-            // cbSaveTemplatePretty
+            // pbExperiment
             // 
-            this.cbSaveTemplatePretty.AutoSize = true;
-            this.cbSaveTemplatePretty.Checked = true;
-            this.cbSaveTemplatePretty.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbSaveTemplatePretty.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbSaveTemplatePretty.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.cbSaveTemplatePretty.Location = new System.Drawing.Point(1193, 71);
-            this.cbSaveTemplatePretty.Name = "cbSaveTemplatePretty";
-            this.cbSaveTemplatePretty.Size = new System.Drawing.Size(126, 22);
-            this.cbSaveTemplatePretty.TabIndex = 4;
-            this.cbSaveTemplatePretty.Text = "Save As Pretty";
-            this.cbSaveTemplatePretty.UseVisualStyleBackColor = true;
+            this.pbExperiment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbExperiment.Location = new System.Drawing.Point(0, 0);
+            this.pbExperiment.Name = "pbExperiment";
+            this.pbExperiment.Size = new System.Drawing.Size(1240, 741);
+            this.pbExperiment.TabIndex = 0;
+            this.pbExperiment.TabStop = false;
+            // 
+            // btnExperiment
+            // 
+            this.btnExperiment.Location = new System.Drawing.Point(62, 354);
+            this.btnExperiment.Name = "btnExperiment";
+            this.btnExperiment.Size = new System.Drawing.Size(97, 27);
+            this.btnExperiment.TabIndex = 0;
+            this.btnExperiment.Text = "Experiment";
+            this.btnExperiment.UseVisualStyleBackColor = true;
+            this.btnExperiment.Click += new System.EventHandler(this.btnExperiment_Click);
             // 
             // Form1
             // 
@@ -1573,6 +1632,12 @@ namespace ImageRegionAnalysis2
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer15)).EndInit();
             this.splitContainer15.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridTimingOutput)).EndInit();
+            this.tabExperiment.ResumeLayout(false);
+            this.splitContainer16.Panel1.ResumeLayout(false);
+            this.splitContainer16.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer16)).EndInit();
+            this.splitContainer16.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbExperiment)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1676,6 +1741,10 @@ namespace ImageRegionAnalysis2
         private System.Windows.Forms.ComboBox comboReadImages;
         private System.Windows.Forms.Label lblReadImages;
         private System.Windows.Forms.CheckBox cbSaveTemplatePretty;
+        private System.Windows.Forms.TabPage tabExperiment;
+        private System.Windows.Forms.SplitContainer splitContainer16;
+        private System.Windows.Forms.Button btnExperiment;
+        private System.Windows.Forms.PictureBox pbExperiment;
     }
 }
 

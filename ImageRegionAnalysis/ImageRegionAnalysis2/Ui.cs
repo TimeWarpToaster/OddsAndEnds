@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace ImageRegionAnalysis2
@@ -314,6 +315,34 @@ namespace ImageRegionAnalysis2
         }
 
 
+
+        public static bool Set(PictureBox pb, Image img)
+        {
+            const string location = CLASSNAME + ".Set(pb)";
+            bool retVal = false;
+            try
+            {
+                if (pb == null)// allow null image clear option
+                {
+                    L.err(location, "UI was null for picture.");
+                    return retVal;
+                }
+                if (pb.InvokeRequired)
+                {
+                    pb.Invoke(new Action(() => Ui.Set(pb, img)));
+                }
+                else 
+                {
+                    pb.Image = img;
+                    retVal = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                L.ex(location, ex);
+            }
+            return retVal;
+        }
 
         public static bool Set(RichTextBox rtb, string body)
         {

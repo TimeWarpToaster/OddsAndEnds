@@ -4,6 +4,17 @@
     {
 
         /*
+         * 2026-09-23
+         * 
+         * O and o are confused often, when characters are cropped by height. One solution may be to keep an 
+         *   average character height, and in the case of an O or o, tell case by greatest difference from average.
+         *   * Significant flaw if content is all upper-case.
+         * 
+         * 2026-09-22
+         * 
+         * [ ] Keep counts on a row-by-row and col-by-col basis
+         * 
+         * 
          * 2026-09-19 - 2026-09-20
          * 
          * [ ] IMPORTANT - xBreaks and yBreaks, need to be read in from template file, auto
@@ -308,6 +319,180 @@
          *      A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z  1  2  3  4  5  6  7  8  9  0
          * 
          * 
+         * 
+         * ==================================================================================
+         * 
+         * 
+         * I need something that can take multiple paths, one step at a time, recursively,
+         * until it can determine if some path leads to the end, for all paths at-once
+         * 
+         * 
+         * 
+         * ...............jjjj    ............|..jjjj
+         * ...............jjj.    ............|..jjj.
+         * ....rrrr...........    ....rrrr....|......
+         * ..rrrrrrrr.....jjj.    ..rrrrrrrr..|..jjj.
+         * .rrr...rrrr....jjj.    .rrr.|.rrrr.|..jjj.
+         * .rrr...rrrr....jjj.    .rrr.|.rrrr.|..jjj.
+         * .rrr...........jjj.    .rrr.________..jjj.
+         * .rrr.....jj...jjj..    .rrr..|..jj...jjj|.
+         * rrrrr.....jjjjj....    rrrrr.|...jjjjj..|.
+         * 
+         * 
+         * It needs to know where it is, only future routes being searched.
+         * 
+         * I'm failing at self-recursion, so what about three methods, two to call each other until one finishes, and one to call in
+         * 
+         * 
+         * It's a mouse in a maze. I can't make recursing over a list work, over a value fine, not a list looking for branches, we're not listing files
+         * Maybe with more time
+         * 
+         * public wrapper(List<List<Pt>>) 
+         * {
+         *     // Loop Y0 here
+         * }
+         * 
+         * 
+         * 
+         * 
+         * public looper(List<List<Pt>> data, Pt idxData) 
+         * {
+         *     // Start looping on a single data
+         *     Pt pt = data[idxData.y][idxData.x];
+         *     
+         *     while (List<Pt> pts = iterator(data, pt))
+         *     {
+         *         if (pts == null || pts.Count == 0) { } // error here and conclude
+         *     }
+         * }
+         * 
+         * 
+         * 
+         * public iterator(List<List<Pt>> data, Pt idxData) {}
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * Probably going back to a Dictionary to fix the outer layer
+         * 
+         * 
+         * public bool canFindEnd(Dictionary<int, List<Pt>> groups)
+         * {
+         * 
+         * 
+         * }
+         * 
+         * 
+         * // Each call gives back a list of compatible groups to be tried next iteration 
+         * // The return Pt can be X and Y into the data, only the data matters
+         * 
+         * public List<Pt> findNextGroup(List<List<int>> data, Pt idxData)
+         * {
+         *     List<Pt> retVal = new List<Pt>();
+         *     Pt origin = data[idxData.y][idxData.x];
+         * 
+         *     for (int y = idxData.y + 1; y < data.Count; y++)
+         *     {
+         *         if (data[y] == null) {}// Finish here
+         *         
+         *         for (int x = 0; x < data[y].Count; x++)
+         *         {
+         *             if (data[y][x] == null) continue;
+         *             if (data[y][x].x > origin.y) continue; // Start after end
+         *             if (data[y][x].y < origin.x) continue; // End after start
+         *             
+         *             retVal.Add(new Pt() { x = x, y = y });
+         *         }
+         *     
+         *     }
+         * }
+         * 
+         * public bool whileFindNextGroup(List<List<int>> data)
+         * {
+         *     
+         *     // At the outer layer, only look at Y0, one of those has to connect
+         *     for X of Y0
+         *     Pt idxData = new Pt(0,0);
+         *     
+         *     // Inner loop the while until path is found
+         *     while(List<Pt> pts = findNextGroup(data, idxData))
+         *     {
+         *         if (pts == null || pts.Count == 0)
+         *         {
+         *             break;// end while
+         *         }
+         *         
+         *         for 
+         *     }
+         *     end for X
+         *     
+         *     // If we are on max Y, decide if path was found
+         *     retVal = foundPath;
+         *     
+         *     return retVal;
+         * }
+         * 
+         * 
+         * 
+         * 
+         * Must have a point
+         * Must have listlist data
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * { 25, 67 } // data[y][x]
+         * { 18, 21 } // origin
+         * 
+         * { 42, 67 }
+         * { 65, 94 }
          * 
          * 
          * 

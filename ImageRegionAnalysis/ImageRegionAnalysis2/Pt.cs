@@ -13,6 +13,8 @@ namespace ImageRegionAnalysis2
 
         public Pt(int xIn, int yIn) { this.x = xIn; this.y = yIn; }
 
+        public Pt(Pt inPt) { if (inPt != null) { this.x = inPt.x; this.y = inPt.y; }  }
+
         public bool Equals(Pt pt)
         {
             return

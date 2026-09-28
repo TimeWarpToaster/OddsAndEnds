@@ -27,6 +27,162 @@ namespace ImageRegionAnalysis2
         public Bits() { }
 
 
+
+        public List<Region> pryCharactersOld(Region region)
+        {
+            const string location = CLASSNAME + ".pryCharacters";
+            List<Region> retVal = null;
+            try
+            {
+                // Need to see if a region contains multiple objects along X
+
+                if (region == null)
+                {
+                    L.err(location, "Input region was null.");
+                    return retVal;
+                }
+                if (region.Start == null || region.End == null)
+                {
+                    L.err(location, "Region start or end was null.");
+                    return retVal;
+                }
+
+                // Any further errors can at-least return input
+                retVal = new List<Region>();
+
+
+                // Track horizontal groups of unset pixels for each Y,
+                // use a Pt x=start offset, y=end offset
+                List<List<Pt>> unsetGroups = new List<List<Pt>>();
+
+                for (int y = region.Start.y, unsetIdx = 0; y <= region.End.y; y++, unsetIdx++)
+                {
+                    unsetGroups.Add(new List<Pt>());
+                    int offset = y * this.width;
+
+                    int idxUnsetStart = -1;
+                    bool inUnset = false;
+                    for (int x = region.Start.x; x <= region.End.x; x++)
+                    {
+                        if (this.ba[offset + x] == true)
+                        {
+                            if (inUnset)
+                            {
+                                // x - 1 only works because we cannot get here on the first iteration
+                                unsetGroups[unsetIdx].Add(new Pt() { x = idxUnsetStart, y = x - 1 });
+                                idxUnsetStart = -1;
+                                inUnset = false;
+                            }
+                        }
+                        else
+                        {
+                            if (idxUnsetStart < 0) idxUnsetStart = x;
+                            inUnset = true;
+                        }
+                    }
+                }
+
+                // Quick check, if any list is 0, return input
+                if (unsetGroups == null || unsetGroups.Count == 0)
+                {
+                    L.err(location, "Failed to find any rows.");
+                    retVal.Add(region);
+                    return retVal;
+                }
+                for (int y = 0; y < unsetGroups.Count; y++)
+                {
+                    if (unsetGroups[y] == null || unsetGroups[y].Count == 0)
+                    {
+                        retVal.Add(region);
+                        return retVal;
+                    }
+                }
+
+
+                // Forking paths is difficult. There is a one-to-many, a many-to-one, a one-to-one, and none that could occur.
+                // I hate tracing... shouldn't there be a better way than a mouse in a maze...
+
+                // Try building a sequential list of overlapping unset pixels
+                List<Pt> between = new List<Pt>();
+                for (int i = 0; i < unsetGroups[0].Count; i++)
+                {
+
+                    // The List<Pt> becomes a List<List<Pt>>. but the branches need to develop as well, 
+                    // something recursive is needed.
+
+                    // On the plus side, when a path is found, say between ij, getting a clean character 
+                    // crop should be as simple as adding equally to the unset groups until an X opens all the way
+                    List<Pt> temp = new List<Pt>();
+                    temp.Add(unsetGroups[0][i]);
+
+                    
+                    //for (int y = 1; y < )
+                }
+                for (int y = 0; y < unsetGroups.Count; y++)
+                {
+                    for (int i = 0; i < unsetGroups[0].Count; i++)
+                    {
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                L.ex(location, ex);
+            }
+            return retVal;
+        }
+
+        /*public List<Region> pryCharacters(Region region)
+        {
+            const string location = CLASSNAME + ".pryCharacters";
+            List<Region> retVal = new List<Region>();
+            try
+            {
+                if (region == null || region.Start == null || region.End == null)
+                {
+                    L.err(location, "Region or one of its points was null.");
+                    retVal.Add(region);
+                    return retVal;
+                }
+                if (!this.isValid(region))
+                {
+                    L.err(location, "Input region was not valid.");
+                    retVal.Add(region);
+                    return retVal;
+                }
+
+                List<Region> separatedRegions = new List<Region>();
+
+                Region left = U.findFirstObject(this, region, U.DIRECTION.LEFT);
+                Region right = U.findFirstObject(this, region, U.DIRECTION.RIGHT);
+
+                if (left.Equals(right))
+                {
+                    // Looking from both sides found the same region
+                    separatedRegions.Add(left);
+                }
+                else
+                {
+                    // We have no reason to believe either region is fully separated,
+                    // we ate one object off each end
+
+                    // this needs to be in a loop somehow
+
+                    separatedRegions.Add(left);
+                    separatedRegions.Add(right);
+                }
+
+                retVal = separatedRegions;
+            }
+            catch (Exception ex)
+            {
+                L.ex(location, ex);
+            }
+            return retVal;
+        }*/
+
         public List<Region> columnsFromRegion(Region region)
         {
             const string location = CLASSNAME + ".columnsFromRegion";
@@ -59,15 +215,39 @@ namespace ImageRegionAnalysis2
                 for (int i = 0; i < cntElements; i++) cntSetX.Add(0);
 
 
+                // Track horizontal groups of unset pixels for each Y,
+                // use a Pt x=start offset, y=end offset
+                List<List<Pt>> unsetGroups = new List<List<Pt>>();
+
+
                 int offsetSetX = 0;
-                for (int y = region.Start.y; y <= region.End.y; y++)
+                for (int y = region.Start.y, unsetIdx = 0; y <= region.End.y; y++, unsetIdx++)
                 {
+                    unsetGroups.Add(new List<Pt>());
                     offsetSetX = 0;
                     int offset = y * this.width;
 
+                    //int idxUnsetStart = -1;
+                    //bool inUnset = false;
                     for (int x = region.Start.x; x <= region.End.x; x++, offsetSetX++)
                     {
-                        if (this.ba[offset + x] == true) cntSetX[offsetSetX]++;
+                        if (this.ba[offset + x] == true)
+                        {
+                            cntSetX[offsetSetX]++;
+
+                            /*if (inUnset)
+                            {
+                                // x - 1 only works because we cannot get here on the first iteration
+                                unsetGroups[unsetIdx].Add(new Pt() { x = idxUnsetStart, y = x - 1 });
+                                idxUnsetStart = -1;
+                                inUnset = false;
+                            }*/
+                        }
+                        /*else
+                        {
+                            if (idxUnsetStart < 0) idxUnsetStart = x;
+                            inUnset = true;
+                        }*/
                     }
                 }
 
@@ -93,7 +273,7 @@ namespace ImageRegionAnalysis2
                 }
 
                 // Test if we are in a region. Complete if open and space allows.
-                if (startTrueX >= 0 && startTrueX < region.End.x)
+                if (startTrueX >= 0 && startTrueX <= region.End.x)
                 {
                     Region charRegion = new Region()
                     {
@@ -103,8 +283,65 @@ namespace ImageRegionAnalysis2
                     regions.Add(charRegion);
                 }
 
-                
-                /*// TODO - Resume cropping characters vertically
+
+                /*// Attempt to split any characters that overlapped the x region
+                L.l(location, "Attempting to separate characters.");
+                List<Region> splitCharacters = new List<Region>();
+                for (int i = 0; i < regions.Count; i++)
+                {
+                    Region myregion = new Region();
+                    myregion.Start = new Pt(regions[i].Start);
+                    myregion.End = new Pt(regions[i].End);
+                    myregion.height = regions[i].height;
+                    myregion.width = regions[i].width;
+
+                    L.l(location, "Region (" + i + "): " + myregion.toString());
+
+                    bool keepSplitting = true;
+                    int loopCntr = 0;
+                    while (keepSplitting)
+                    {
+                        L.l(location, "New loop (" + i + ", " + loopCntr + "): " + myregion.toString());
+                        // Find first left region
+                        Region split = U.findFirstObject(this, myregion, U.DIRECTION.RIGHT);
+
+                        // Remove first left
+                        if (split != null && split.Start != null && split.End != null)
+                        {
+                            Region reg = new Region();
+                            reg.Start = new Pt() { x = split.Start.x, y = myregion.Start.y };
+                            reg.End = new Pt() { x = split.End.x, y = myregion.End.y };
+                            reg.height = myregion.height;
+                            reg.width = myregion.width;
+
+                            L.l(location, "Found Region (" + i + ", " + loopCntr + "): " + reg.toString());
+
+                            splitCharacters.Add(reg);
+                            myregion.Start.x = reg.End.x + 1;
+                            loopCntr++;
+                        }
+                        if (split == null || split.Start == null || split.End == null || split.Start.Equals(split.End))
+                        {
+                            keepSplitting = false;
+                            break;
+                        }
+                        if (loopCntr > 100)
+                        {
+                            // Expect for their not to be more than 100 overlapped characters
+                            L.err(location, "Failed to find all characters in 100 iterations.");
+                            keepSplitting = false;
+                            break;
+                        }
+                    }
+
+                }
+                if (splitCharacters != null && splitCharacters.Count > 0)
+                {
+                    regions = splitCharacters;
+                }*/
+
+
+                // Crop characters vertically
                 List<Region> croppedV = cropRegionsV(regions);
                 if (croppedV == null)
                 {
@@ -133,7 +370,7 @@ namespace ImageRegionAnalysis2
                         // Succeed with crops
                         regions = croppedV;
                     }
-                }*/
+                }
 
                 // Output Result
                 retVal = regions;
@@ -786,7 +1023,7 @@ namespace ImageRegionAnalysis2
             List<Region> retVal = inRegions;
             try
             {
-                L.l(location, "Crop regions start.");
+                //L.l(location, "Crop regions start.");
                 if (inRegions == null)
                 {
                     L.err(location, "Input regions was null.");
@@ -797,7 +1034,7 @@ namespace ImageRegionAnalysis2
                     L.err(location, "Data not initialized at vertical crops.");
                     return retVal;
                 }
-                L.l(location, "Begin iterate.");
+                //L.l(location, "Begin iterate.");
 
                 List<Region> regions = new List<Region>();
                 for (int i = 0; i < inRegions.Count; i++)
@@ -821,7 +1058,7 @@ namespace ImageRegionAnalysis2
                     int topYFound = -1;
                     int bottomYFound = -1;
 
-                    L.l(location, "Finding top.");
+                    //L.l(location, "Finding top.");
                     for (int y = topY; topYFound < 0 && y <= bottomY; y++)
                     {
                         int offsetRow = y * this.width;
@@ -833,7 +1070,7 @@ namespace ImageRegionAnalysis2
                                 cntSet++;
                                 if (cntSet >= cntRequired)
                                 {
-                                    L.l(location, "Found top Y (" + y + ").");
+                                    //L.l(location, "Found top Y (" + y + ").");
                                     topYFound = y;
                                     break;
                                 }
@@ -841,7 +1078,7 @@ namespace ImageRegionAnalysis2
                         }
                     }
 
-                    L.l(location, "Finding bottom.");
+                    //L.l(location, "Finding bottom.");
                     for (int y = bottomY; bottomYFound < 0 && y >= topY; y--)
                     {
                         int offsetRow = y * this.width;
@@ -853,7 +1090,7 @@ namespace ImageRegionAnalysis2
                                 cntSet++;
                                 if (cntSet >= cntRequired)
                                 {
-                                    L.l(location, "Found bottom Y (" + y + ").");
+                                    //L.l(location, "Found bottom Y (" + y + ").");
                                     bottomYFound = y;
                                     break;
                                 }
@@ -870,21 +1107,23 @@ namespace ImageRegionAnalysis2
                     }
                     else 
                     {
-                        L.l(location, "Adding cropped region to output.");
+                        //L.l(location, "Adding cropped region to output.");
                         Region region = new Region();
-                        region.Start = new Pt(inRegions[i].Start.x, topY);
-                        region.End = new Pt(inRegions[i].End.x, bottomY);
+                        region.Start = new Pt(inRegions[i].Start.x, topYFound);
+                        region.End = new Pt(inRegions[i].End.x, bottomYFound);
+                        region.height = inRegions[i].height;
+                        region.width = inRegions[i].width;
                         /*region.Start.x = inRegions[i].Start.x;
                         region.Start.y = topY;
                         region.End.x = inRegions[i].End.x;
                         region.End.y = bottomY;*/
                         regions.Add(region);
-                        L.l(location, "Added cropped region to output.");
+                        //L.l(location, "Added cropped region to output.");
                     }
                 }
 
                 // Output Result
-                L.l(location, "Outputting result.");
+                //L.l(location, "Outputting result.");
                 retVal = regions;
             }
             catch (Exception ex)
