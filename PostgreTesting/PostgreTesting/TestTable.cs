@@ -477,7 +477,7 @@ namespace PostgreTesting
     {
         public const string CLASSNAME = "TestHelpers";
 
-        private const string connectString = "Host=localhost;UserName=postgres;Password=EPost01;Database=FirstDB;Port=5432";
+        private const string connectString = "Host=localhost;UserName=postgres;Password=YourPassword;Database=DbName;Port=5432";
 
         public static DateTime[] dates1 = new DateTime[31];// sequential last 30
         public static DateTime[] dates2 = new DateTime[31];// sequential mo. before
