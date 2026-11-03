@@ -43,3 +43,34 @@ Query tab and options allow for soft-defined or dynamic SQL queries to be run ad
 The DB Select tab allows switching between database engines. Sorry, there is no abundant UI feedback. The Logs tab verifies new DB is connected, test table exists, and the connection is ready to go. Clicking on a db engine, will automatically update the connect string field with whatever is stored in the config file for that database. Important:  The new database will not be connected until you click Connect. Selecting a radio button, only refreshes the connect string option, but does not change the current connection. If I make it back here, more positive connection feedback on the list.
 
 The goal of this app, is not any particular database usage, nor to help in anyway manage a database. It is simply a generic way to load millions of randomized rows containing common datatypes, and begin outside testing with just a few clicks. Underlying benefit being, progress towards a common interface.
+
+
+## Automation
+
+The Automation tab simply allows automating a series of tests, with a summary of time per test when complete. The times try to be close to db times + ADO times. 
+
+Critical Notes:  If TestTable exists in selected database, it will be dropped and recreated when testing begins. Inserts are required for other testing (select/update). You must select a number of inserts that is OVER 2x larger than the select tests you wish to run. For instance, select enough insert tests to add at-least 50001 records, if you want to test selecting 25K. This is due to the excessive time required to generate a random list of unique ids within range, if the pool is too small. 
+
+Tests currently implemented (each accepts a number of iterations to perform):
+
+Insert Rows - Randomly generates a fixed number of rows, and inserts them, reporting the collected insert times.
+
+Non-Sequential Select - Selects a number of rows by randomly generated ids, reports the collected select times.
+
+Select Varchar - Gets the varchars associated with SerialNum for a list of otherwise random ids, then performs a varchar select on the rows as a second operation, reporting the later.
+
+Select Date Range - Selects upto the first 10000 rows created within the last day. Due to a datetime timezone offset error in the way create date time is being created in SQLite, it does not qualify for this test on an equal footing. The create timestamp can be hours future, in-which case, nothing is returned. 
+
+Update - Iterates a selected number of full-row update operations, on a randomly generated list of ids. Effectively, new data is generated, given the same id, and update performed. 
+
+--
+
+Pause and Stop work. If you need to put a computer to sleep during long-running tests, pause first, or the current test will throw an exception invalidating its result, and progress will otherwise resume with the next test. Stop will cancel the current series of testing completely, report what did happen, and a new test will have to be started from scratch.
+
+--
+
+Developer's Note:
+
+The class DB.cs is a dispatch to know which database is connected, and route requests. Classes DBSomeName.cs contain a working interface for the named database, essentially primitive. These contain the C# end of the corresponding ADO wrapper. The class TSQL.cs contains a majority of the TSQL, split up by database, used to create the TestTable, index it, and create a few procedures for testing. The TSQL is intended to be functionally equivalent, but if you are looking for discrepancies, this would be a first place to start. TestTable.cs contains the TestTable C# object class to match the table, and a TestHelpers class tacked-on to facilitate modeling data, random generation, and the repetitive logic of executing single tests. 
+
+
