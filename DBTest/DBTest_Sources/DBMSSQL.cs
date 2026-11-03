@@ -106,7 +106,7 @@ namespace DBTest
             return retVal;
         }
 
-        public static bool createTestTable(bool dropFirst)
+        /*public static bool createTestTable(bool dropFirst)
         {
             const string location = CLASSNAME + ".createTestTable";
             bool retVal = false;
@@ -189,7 +189,7 @@ namespace DBTest
                 L.ex(location, ex);
             }
             return retVal;
-        }
+        }*/
 
         // dynamicSQL - Parameterless query as text in query.sql
         public static bool dynamicSQL(ref SQLWrapper query)
@@ -640,8 +640,10 @@ namespace DBTest
                                 foreach (KeyValuePair<string, object> kv in query.parms)
                                     command.Parameters.AddWithValue(kv.Key, kv.Value);
 
-                            long val = (long)command.ExecuteScalar();
-                            retVal = val;
+
+                            retVal = Convert.ToInt32(command.ExecuteScalar());
+                            //long val = (long)command.ExecuteScalar();
+                            //retVal = val;
                         }
                     }
                 }
@@ -759,6 +761,7 @@ namespace DBTest
                 string sql = "";
                 int idxSql = -1;
                 int cntParms = 0;
+                bool isDbFunction = queries[0].isDbFunction;
 
                 // Find the first valid sql to use
                 for (int i = 0; i < queries.Count; i++)
@@ -800,6 +803,10 @@ namespace DBTest
                         {
                             using (SqlCommand command = new SqlCommand(sql, connection))
                             {
+                                if (isDbFunction)
+                                {
+                                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                                }
                                 command.Prepare();
 
                                 List<string> fieldNames = new List<string>();

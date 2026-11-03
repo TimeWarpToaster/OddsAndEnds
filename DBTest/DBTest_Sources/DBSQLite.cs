@@ -108,7 +108,7 @@ namespace DBTest
             return retVal;
         }
 
-        public static bool createTestTable(bool dropFirst)
+        /*public static bool createTestTable(bool dropFirst)
         {
             const string location = CLASSNAME + ".createTestTable";
             bool retVal = false;
@@ -192,7 +192,7 @@ namespace DBTest
                 L.ex(location, ex);
             }
             return retVal;
-        }
+        }*/
 
         // dynamicSQL - Parameterless query as text in query.sql
         public static bool dynamicSQL(ref SQLWrapper query)
@@ -363,11 +363,12 @@ namespace DBTest
                         {
                             using (SQLiteCommand command = new SQLiteCommand(query.sql, connection, transaction))
                             {
-                                command.Prepare();
+                                //command.Prepare();
 
                                 foreach (KeyValuePair<string, object> kv in query.parms)
                                 {
-                                    command.Parameters.Add(new SQLiteParameter("@" + kv.Key, kv.Value));
+                                    //command.Parameters.Add(new SQLiteParameter("@" + kv.Key, kv.Value));
+                                    command.Parameters.AddWithValue("@" + kv.Key, kv.Value);
                                 }
 
                                 retVal = command.ExecuteNonQuery() > 0;
@@ -763,6 +764,7 @@ namespace DBTest
                 string sql = "";
                 int idxSql = -1;
                 int cntParms = 0;
+                bool isDbFunction = queries[0].isDbFunction;
 
                 // Find the first valid sql to use
                 for (int i = 0; i < queries.Count; i++)
@@ -804,6 +806,10 @@ namespace DBTest
                         {
                             using (SQLiteCommand command = new SQLiteCommand(sql, connection))
                             {
+                                /*if (isDbFunction)
+                                {
+                                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                                }*/
                                 command.Prepare();
 
                                 List<string> fieldNames = new List<string>();

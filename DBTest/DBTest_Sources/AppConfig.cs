@@ -91,5 +91,51 @@ namespace DBTest
             }
             return retValue;
         }
+
+
+        // SetConfig will set only, does not add
+        private const string fkLocSet = "AppConfig.Set(key)";
+        public static bool SetConfig(string key, object value)
+        {
+            bool retValue = false;
+            try
+            {
+                L.l("AppConfig.SetConfig", "Saving config (" + key + ") with value (" + Convert.ToString(value) + ").");
+                Configuration c = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                if (c.AppSettings.Settings[key] == null)
+                {
+                    return retValue;
+                }
+                c.AppSettings.Settings[key].Value = Convert.ToString(value);
+                c.Save(ConfigurationSaveMode.Modified);
+                retValue = true;
+            }
+            catch (Exception ex)
+            {
+                L.ex(fkLocSet, ex);
+            }
+            return retValue;
+        }
+
+
+        public static bool Set(string key, bool value)
+        {
+            return SetConfig(key, value);
+        }
+
+        public static bool Set(string key, int value)
+        {
+            return SetConfig(key, value);
+        }
+
+        public static bool Set(string key, long value)
+        {
+            return SetConfig(key, value);
+        }
+
+        public static bool Set(string key, string value)
+        {
+            return SetConfig(key, value);
+        }
     }
 }

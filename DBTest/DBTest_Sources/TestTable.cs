@@ -781,6 +781,132 @@ namespace DBTest
             return retVal;
         }
 
+        public Dictionary<string, object> toUpdateParms()
+        {
+            const string location = CLASSNAME + ".toUpdateParms";
+            Dictionary<string, object> retVal = new Dictionary<string, object>();
+            try
+            {
+                DB.Engine engine = DB.engine();
+                bool isUnixMs = engine == DB.Engine.SQLITE;
+                bool isUtc = engine == DB.Engine.POSTGRE;
+
+                Dictionary<string, object> temp = new Dictionary<string, object>();
+                temp.Add("TestId", this.TestId);
+                temp.Add("FID1", this.FID1);
+                temp.Add("FID2", this.FID2);
+                temp.Add("FID3", this.FID3);
+                temp.Add("Label", this.Label);
+                temp.Add("UnitNum", this.UnitNum);
+                temp.Add("SerialNum", this.SerialNum);
+                temp.Add("MfrId", this.MfrId);
+                temp.Add("MfrLocId", this.MfrLocId);
+                temp.Add("MachineId", this.MachineId);
+                temp.Add("Lot", this.Lot);
+                if (isUnixMs)
+                {
+                    temp.Add("MfrDate", ((DateTimeOffset)this.MfrDate).ToUnixTimeMilliseconds());
+                    temp.Add("InstDate", ((DateTimeOffset)this.InstDate).ToUnixTimeMilliseconds());
+                }
+                else if (isUtc)
+                {
+                    temp.Add("MfrDate", ((DateTimeOffset)this.MfrDate).ToUniversalTime());
+                    temp.Add("InstDate", ((DateTimeOffset)this.InstDate).ToUniversalTime());
+                }
+                else
+                {
+                    temp.Add("MfrDate", this.MfrDate);
+                    temp.Add("InstDate", this.InstDate);
+                }
+                temp.Add("InstAddr1", this.InstAddr1);
+                temp.Add("InstAddr2", this.InstAddr2);
+                temp.Add("InstCity", this.InstCity);
+                temp.Add("InstCounty", this.InstCounty);
+                temp.Add("InstProvince", this.InstProvince);
+                temp.Add("InstState", this.InstState);
+                temp.Add("InstCountry", this.InstCountry);
+                if (isUnixMs)
+                {
+                    temp.Add("LastChecked", ((DateTimeOffset)this.LastChecked).ToUnixTimeMilliseconds());
+                    temp.Add("LastModified", ((DateTimeOffset)this.LastModified).ToUnixTimeMilliseconds());
+                    temp.Add("LastReplaced", ((DateTimeOffset)this.LastReplaced).ToUnixTimeMilliseconds());
+                }
+                else if (isUtc)
+                {
+                    temp.Add("LastChecked", ((DateTimeOffset)this.LastChecked).ToUniversalTime());
+                    temp.Add("LastModified", ((DateTimeOffset)this.LastModified).ToUniversalTime());
+                    temp.Add("LastReplaced", ((DateTimeOffset)this.LastReplaced).ToUniversalTime());
+                }
+                else
+                {
+                    temp.Add("LastChecked", this.LastChecked);
+                    temp.Add("LastModified", this.LastModified);
+                    temp.Add("LastReplaced", this.LastReplaced);
+                }
+                temp.Add("LastTechId", this.LastTechId);
+                if (isUnixMs)
+                {
+                    temp.Add("BillingDate", ((DateTimeOffset)this.BillingDate).ToUnixTimeMilliseconds());
+                    temp.Add("LastBillingDate", ((DateTimeOffset)this.LastBillingDate).ToUnixTimeMilliseconds());
+                }
+                else if (isUtc)
+                {
+                    //temp.Add("BillingDate", ((DateTimeOffset)this.BillingDate).ToUniversalTime());
+                    //temp.Add("LastBillingDate", ((DateTimeOffset)this.LastBillingDate).ToUniversalTime());
+                    temp.Add("BillingDate", this.BillingDate);
+                    temp.Add("LastBillingDate", this.LastBillingDate);
+                }
+                else
+                {
+                    temp.Add("BillingDate", this.BillingDate);
+                    temp.Add("LastBillingDate", this.LastBillingDate);
+                }
+                if (engine == DB.Engine.POSTGRE)
+                {
+                    temp.Add("Due", (float)this.Due);
+                    temp.Add("PastDue", (float)this.PastDue);
+                    temp.Add("LastDue", (float)this.LastDue);
+                }
+                else
+                {
+                    temp.Add("Due", this.Due);
+                    temp.Add("PastDue", this.PastDue);
+                    temp.Add("LastDue", this.LastDue);
+                }
+                temp.Add("Something", this.Something);
+                temp.Add("IsActive", this.isActive);
+                temp.Add("IsOnline", this.isOnline);
+                if (isUnixMs)
+                {
+                    temp.Add("LastOffline", ((DateTimeOffset)this.LastOffline).ToUnixTimeMilliseconds());
+                }
+                else if (isUtc)
+                {
+                    temp.Add("LastOffline", ((DateTimeOffset)this.LastOffline).ToUniversalTime());
+                }
+                else
+                {
+                    temp.Add("LastOffline", this.LastOffline);
+                }
+                temp.Add("FailedMessages", this.FailedMessages);
+                temp.Add("LastActionCode", this.LastActionCode);
+                temp.Add("LastAction", this.LastAction);
+                temp.Add("NextActionCode", this.NextActionCode);
+                temp.Add("NextTechId", this.NextTechId);
+                temp.Add("CntActionsTaken", this.CntActionsTaken);
+                temp.Add("LastNote", this.LastNote);
+
+                retVal = temp;
+            }
+            catch (Exception ex)
+            {
+                L.ex(location, ex);
+            }
+            return retVal;
+        }
+
+
+
         public string toString()
         {
             const string location = CLASSNAME + ".toString";
@@ -1072,7 +1198,6 @@ namespace DBTest
 
 
 
-
         public static DateTime nextDt(int dtIdentifier)
         {
             const string location = CLASSNAME + ".nextDt";
@@ -1192,6 +1317,58 @@ namespace DBTest
             return retVal;
         }
 
+        public static List<long> nextRangeSelect(int quantity, int min, int max)
+        {
+            const string location = CLASSNAME + "nextRangeSelect";
+            List<long> retVal = new List<long>();
+            try
+            {
+                if (quantity > 100000)
+                {
+                    L.err(location, "Quantity must be 100000 or less.");
+                    return retVal;
+                }
+                int effectiveRange = max - min;
+                if (effectiveRange <= 0)
+                {
+                    L.err(location, "Range between max (" + max + ") and min (" + min + ") was (" + effectiveRange + ").");
+                    return retVal;
+                }
+                if (effectiveRange / 2 < quantity)
+                {
+                    L.err(location, "Will not randomly grab more than half of max, select less quantity.");
+                    return retVal;
+                }
+                if (thr == null) thr = new Random();
+
+                List<long> temp = new List<long>();
+                for (int i = 0; temp.Count < quantity; i++)
+                {
+                    long current = thr.Next(min, max);
+                    if (temp.IndexOf(current) < 0)
+                    {
+                        temp.Add(current);
+                        i++;
+                    }
+                }
+
+                if (temp.Count == quantity)
+                {
+                    retVal = temp;
+                }
+                else 
+                {
+                    L.err(location, "Produced (" + temp.Count + ") values, but (" + quantity + ") were requested. Discarding.");
+                    return retVal;
+                }
+            }
+            catch (Exception ex)
+            {
+                L.ex(location, ex);
+            }
+            return retVal;
+        }
+
         public static TestTable ModelRow()
         {
             const string location = CLASSNAME + ".ModelRow";
@@ -1262,7 +1439,7 @@ namespace DBTest
             return retVal;
         }
 
-        public static bool ModelSelect(ref SQLWrapper query, int rows, int minId, int maxId, bool isDbFunction)
+        public static bool ModelSelect(ref SQLWrapper query, int rows, int minId, int maxId)
         {
             const string location = CLASSNAME + ".ModelSelect";
             bool retVal = false;
@@ -1277,49 +1454,31 @@ namespace DBTest
                 if (query.result == null) query.result = new List<Dictionary<string, object>>();
 
                 DateTime dtGetIdsStart = DateTime.Now;
-                if (maxId / 2 < rows)
-                {
-                    L.err(location, "Will not randomly grab more than half of max, select fewer rows.");
-                    return retVal;
-                }
-                List<long> ids = new List<long>();
-                Random r = new Random();
-                r.Next(r.Next(r.Next()));
-
-                for (int i = 0; ids.Count < rows; i++)
-                {
-                    long current = r.Next(minId, maxId);
-                    if (ids.IndexOf(current) < 0)
-                    {
-                        ids.Add(current);
-                        i++;
-                    }
-                }
+                List<long> ids = nextRangeSelect(rows, minId, maxId);
                 DateTime dtGetIdsEnd = DateTime.Now;
                 L.l(location, "Generated (" + ids.Count + ") random ids in (" + (dtGetIdsEnd - dtGetIdsStart).TotalMilliseconds + "ms).");
 
-                L.l(location, "Using " + (isDbFunction ? "db function" : "dynamic sql") + " to query.");
 
-                L.l(location, "Selecting rows for (" + ids.Count + ") ids.");
+                //L.l(location, "Using " + (query.isDbFunction ? "db function" : "dynamic sql") + " to query.");
                 DateTime dtStart = DateTime.Now;
                 List<TestTable> myRows = new List<TestTable>();
-
 
                 // Select with generic helper
                 for (int i = 0; i < ids.Count; i++)
                 {
                     SQLWrapper temp = new SQLWrapper();
-                    temp.isDbFunction = isDbFunction;
+                    temp.isDbFunction = query.isDbFunction;
                     if (temp.isDbFunction)
                     {
-                        temp.sql = "SELECT * FROM TestTable WHERE TestTable.TestId=@TestId";
                         temp.parms.Add("TestId", ids[i]);
+                        temp.sql = DB.getProcedureSql("getTestTableById", temp.parms);
                     }
                     else
                     {
                         temp.sql = "SELECT * FROM TestTable WHERE TestTable.TestId=" + ids[i] + ";";
                     }
 
+                    // Execute procedure
                     if (!DB.que(ref temp))
                     {
                         continue;// Failure count will play out in final result
@@ -1332,7 +1491,7 @@ namespace DBTest
                     }
                     if (temp.result.Count == 0)
                     {
-                        L.err(location, "Result from DB was null.");
+                        L.err(location, "Result from DB was empty.");
                         continue;
                     }
                     if (temp.result[0] == null)
@@ -1393,6 +1552,387 @@ namespace DBTest
                     if (myRows[i] == null) continue;
                     L.l(location, myRows[i].toString());
                 }*/
+            }
+            catch (Exception ex)
+            {
+                L.ex(location, ex);
+            }
+            return retVal;
+        }
+
+        public static bool ModelSelectDateRange(ref SQLWrapper query, int rows, DateTime dtSelectStart, DateTime dtSelectEnd)
+        {
+            const string location = CLASSNAME + ".ModelSelectDateRange";
+            bool retVal = false;
+            try
+            {
+                if (dtSelectStart == null || dtSelectStart.Year < 1900 ||
+                    dtSelectEnd == null || dtSelectEnd.Year < 1900)
+                {
+                    L.err(location, "Dates of range must be not-null and after year 1900.");
+                    return retVal;
+                }
+
+                // Basic query validation, does not account for caller reuse.
+                if (query == null)
+                {
+                    query = new SQLWrapper();
+                }
+                if (query.parms == null) query.parms = new Dictionary<string, object>();
+                if (query.result == null) query.result = new List<Dictionary<string, object>>();
+
+                DB.Engine engine = DB.engine();
+
+                //L.l(location, "Using " + (query.isDbFunction ? "db function" : "dynamic sql") + " to query.");
+                DateTime dtStart = DateTime.Now;
+
+                // Select with generic helper
+                SQLWrapper temp = new SQLWrapper();
+                temp.isDbFunction = query.isDbFunction;
+                if (temp.isDbFunction)
+                {
+                    if (engine == DB.Engine.POSTGRE)
+                    {
+                        temp.parms.Add("DtStart", dtSelectStart.ToUniversalTime());
+                        temp.parms.Add("DtEnd", dtSelectEnd.ToUniversalTime());
+                    }
+                    else
+                    {
+                        temp.parms.Add("DtStart", dtSelectStart);
+                        temp.parms.Add("DtEnd", dtSelectEnd);
+                    }
+                    temp.parms.Add("MaxRecords", rows);
+                    temp.sql = DB.getProcedureSql("getTestTableByDt", temp.parms);
+                }
+                else
+                {
+                    string limitMS = "";
+                    string limitElse = "";
+                    if (DB.engine() == DB.Engine.MSSQL) limitMS = "top " + rows + " ";
+                    else limitElse = " limit " + rows;
+
+
+                    temp.sql = "SELECT " + limitMS + "* FROM TestTable T where T.CDT > '" + dtSelectStart.ToString(L.TAG.DTF) +
+                        "' and T.CDT <= '" + dtSelectEnd.ToString(L.TAG.DTF) +
+                        "' order by T.TestId desc" + limitElse + ";";
+                }
+
+                // Execute procedure
+                if (!DB.que(ref temp))
+                {
+                    L.l(location, "Failed to process query: " + temp.sql);
+                    return retVal;
+                }
+
+                if (temp.result == null)
+                {
+                    L.err(location, "Failed to acquire result from DB, null.");
+                }
+                else
+                {
+                    query.result.AddRange(temp.result);
+                    query.queryMS += temp.queryMS;
+                }
+
+                DateTime dtEnd = DateTime.Now;
+                L.l(location, "Finished selecting (" + query.result.Count + ") rows, between (" + 
+                    dtSelectStart.ToString(L.TAG.DTF) + ") and (" + dtSelectEnd.ToString(L.TAG.DTF) + 
+                    "), after (" + (dtEnd - dtStart).TotalMilliseconds + "ms).");
+
+                retVal = true;
+            }
+            catch (Exception ex)
+            {
+                L.ex(location, ex);
+            }
+            return retVal;
+        }
+
+        public static bool ModelSelectVarchar(ref SQLWrapper query, int rows, int minId, int maxId)
+        {
+            const string location = CLASSNAME + ".ModelSelectVarchar";
+            bool retVal = false;
+            try
+            {// Basic query validation, does not account for caller reuse.
+                if (query == null)
+                {
+                    query = new SQLWrapper();
+                }
+                if (query.parms == null) query.parms = new Dictionary<string, object>();
+                if (query.result == null) query.result = new List<Dictionary<string, object>>();
+
+                DateTime dtGetIdsStart = DateTime.Now;
+                List<long> ids = nextRangeSelect(rows, minId, maxId);
+                DateTime dtGetIdsEnd = DateTime.Now;
+                L.l(location, "Generated (" + ids.Count + ") random ids in (" + (dtGetIdsEnd - dtGetIdsStart).TotalMilliseconds + "ms).");
+
+
+                // Before starting the test, prequery each id and get a SerialNum varchar(40) to work with
+                List<string> varcharIn = new List<string>();
+                int cntErr = 0;
+                for (int i = 0; i < ids.Count; i++)
+                {
+                    // Reserve space for this index
+                    varcharIn.Add("");
+
+                    SQLWrapper varcharQuery = new SQLWrapper();
+                    varcharQuery.sql = "select * from TestTable where TestTable.TestId=" + ids[i] + ";";
+
+                    object t = null;
+                    if (!DB.que(ref varcharQuery)) 
+                        cntErr++;
+                    else if (varcharQuery.result == null || varcharQuery.result.Count == 0) 
+                        cntErr++;
+                    else if (varcharQuery.result[0] == null)
+                        cntErr++;
+                    else if (varcharQuery.result[0].ContainsKey("SerialNum"))
+                    {
+                        t = varcharQuery.result[0]["SerialNum"];
+                    }
+                    else if (varcharQuery.result[0].ContainsKey("serialnum"))
+                    {
+                        t = varcharQuery.result[0]["serialnum"];
+                    }
+                    else cntErr++;
+
+                    if (t == null) continue;
+
+                    try
+                    {
+                        varcharIn[i] = Convert.ToString(t);
+                    }
+                    catch (Exception exConv) { }
+                }
+
+                if (varcharIn.Count != ids.Count)
+                {
+                    L.err(location, "Data length mismatch, ids (" + ids.Count + "), serials (" + varcharIn.Count + ").");
+                    return retVal;
+                }
+
+
+
+                L.l(location, "Using " + (query.isDbFunction ? "db function" : "dynamic sql") + " to query.");
+                DateTime dtStart = DateTime.Now;
+                List<TestTable> myRows = new List<TestTable>();
+
+                // Select with generic helper
+                //foreach (KeyValuePair<string, string> kv in varcharIn)
+                for (int i = 0; i < varcharIn.Count; i++)
+                {
+                    if (varcharIn[i] == null || varcharIn[i].Length == 0) continue;
+
+                    SQLWrapper temp = new SQLWrapper();
+                    temp.isDbFunction = query.isDbFunction;
+                    if (temp.isDbFunction)
+                    {
+                        temp.parms.Add("SerialNum", varcharIn[i]);
+                        temp.parms.Add("MaxRecords", rows);
+                        temp.sql = DB.getProcedureSql("getTestTableBySerialNum", temp.parms);
+                    }
+                    else
+                    {
+                        string limitMS = "";
+                        string limitElse = "";
+                        if (DB.engine() == DB.Engine.MSSQL) limitMS = "top " + rows + " ";
+                        else limitElse = " limit " + rows;
+
+                        temp.sql = "SELECT " + limitMS + "* FROM TestTable WHERE TestTable.SerialNum='" + 
+                            varcharIn[i] + "' " + limitElse + ";";
+                    }
+
+                    // Execute procedure
+                    if (!DB.que(ref temp))
+                    {
+                        continue;// Failure count will play out in final result
+                    }
+                    
+                    if (temp.result == null) L.err(location, "Failed to acquire result from DB, null.");
+                    else if (temp.result.Count == 0) L.err(location, "Result from DB was empty.");
+                    else if (temp.result[0] == null) L.err(location, "Result row was null.");
+                    else if (temp.result[0].Count == 0) L.err(location, "Result row-0 was empty.");
+                    else
+                    {
+                        query.result.Add(temp.result[0]);
+                        query.queryMS += temp.queryMS;
+                    }
+                }
+
+                DateTime dtEnd = DateTime.Now;
+                L.l(location, "Finished selecting (" + query.result.Count + ") rows, out of (" + ids.Count + ") ids, and (" +
+                    rows + ") requested, after (" + (dtEnd - dtStart).TotalMilliseconds + "ms).");
+
+                retVal = query.result.Count == rows;
+            }
+            catch (Exception ex)
+            {
+                L.ex(location, ex);
+            }
+            return retVal;
+        }
+
+        public static bool ModelUpdate(ref SQLWrapper query, int rows, int minId, int maxId)
+        {
+            const string location = CLASSNAME + ".ModelUpdate";
+            bool retVal = false;
+            try
+            {// Basic query validation, does not account for caller reuse.
+                if (query == null)
+                {
+                    query = new SQLWrapper();
+                }
+                if (query.parms == null) query.parms = new Dictionary<string, object>();
+                if (query.result == null) query.result = new List<Dictionary<string, object>>();
+
+                DateTime dtGetIdsStart = DateTime.Now;
+                List<long> ids = nextRangeSelect(rows, minId, maxId);
+                DateTime dtGetIdsEnd = DateTime.Now;
+                L.l(location, "Generated (" + ids.Count + ") random ids in (" + (dtGetIdsEnd - dtGetIdsStart).TotalMilliseconds + "ms).");
+
+                // Create new object data for each id
+                List<TestTable> objects = new List<TestTable>();
+                for (int i = 0; i < ids.Count; i++)
+                {
+                    TestTable obj = TestHelpers.ModelRow();
+                    obj.TestId = ids[i];
+                    objects.Add(obj);
+                }
+
+                // Create update queries
+                List<SQLWrapper> queries = new List<SQLWrapper>();
+                string sql = null;
+                for (int i = 0; i < objects.Count; i++)
+                {
+                    if (objects[i] == null) continue;
+                    SQLWrapper temp = new SQLWrapper();
+                    temp.parms = objects[i].toUpdateParms();
+
+                    if (sql == null)
+                        sql = DB.getProcedureSql("updateTestTableById", temp.parms);
+
+                    temp.sql = sql;
+                    queries.Add(temp);
+                }
+
+                // Select with generic helper
+                int cntComplete = 0;
+                for (int i = 0; i < queries.Count; i++)
+                {
+                    SQLWrapper temp = queries[i];
+                    // Execute procedure
+                    if (!DB.que(ref temp))
+                    {
+                        continue;// Failure count will play out in final result
+                    }
+
+                    // Update is not currently selecting anything. 
+                    // Succeed on no db error
+
+                    /*if (temp.result == null)
+                    {
+                        L.err(location, "Failed to acquire result from DB, null.");
+                        continue;
+                    }
+                    if (temp.result.Count == 0)
+                    {
+                        L.err(location, "Result from DB was empty.");
+                        continue;
+                    }
+                    if (temp.result[0] == null)
+                    {
+                        L.err(location, "Result row was null.");
+                        continue;
+                    }
+                    if (temp.result[0].Count == 0)
+                    {
+                        L.err(location, "Result row-0 was empty.");
+                        continue;
+                    }
+
+                    query.result.Add(temp.result[0]);*/
+                    query.queryMS += temp.queryMS;
+                    cntComplete++;
+                }
+
+                retVal = cntComplete == rows;
+            }
+            catch (Exception ex)
+            {
+                L.ex(location, ex);
+            }
+            return retVal;
+        }
+
+        public static bool ModelData(ref SQLWrapper query, int rows)
+        {
+            const string location = CLASSNAME + ".ModelData";
+            bool retVal = false;
+            try
+            {
+                // This wrapper will not contain sql or results (bulk). It exists
+                // to track actual insert times over the span of iterations.
+                if (query == null)
+                {
+                    query = new SQLWrapper();
+                }
+                if (query.parms == null) query.parms = new Dictionary<string, object>();
+                if (query.result == null) query.result = new List<Dictionary<string, object>>();
+
+
+                DateTime dtStart = DateTime.Now;
+
+
+                int cntInserts = 0;
+                int cntrLog = 0;
+                for (int i = 0; i < rows;)
+                {
+                    // Create a set of 1000 random rows at a time
+                    List<SQLWrapper> modelRows = new List<SQLWrapper>();
+                    for (int j = 0; j < 1000 && i < rows; j++, i++, cntrLog++)
+                    {
+                        // TODO - Change SQL to use update procedure
+                        SQLWrapper row = new SQLWrapper();
+                        row.tableName = "TestTable";
+                        row.parms = TestHelpers.ModelRow().toInsertParms();
+                        modelRows.Add(row);
+                    }
+
+                    // Insert set, uses transaction with prepared statement (no sp/function)
+                    if (modelRows.Count == 0)
+                    {
+                        L.err(location, "Failed to package data set for db.");
+                        continue;
+                    }
+
+                    if (!DB.insert(ref modelRows))
+                    {
+                        L.err(location, "Failed to insert data set into db.");
+                    }
+                    else
+                    {
+                        cntInserts += modelRows.Count;
+                    }
+
+                    for (int idxRow = 0; idxRow < modelRows.Count; idxRow++)
+                    {
+                        if (modelRows[idxRow] == null) continue;
+                        query.queryMS += modelRows[idxRow].queryMS;
+                    }
+
+                    if (cntrLog >= 10000)
+                    {
+                        cntrLog = 0;
+                        L.l(location, "Inserted record (" + i + ") of (" + rows + ").");
+                    }
+                }
+
+                // Log db time
+                L.l(location, "Inserted (" + cntInserts + ") of (" + rows +
+                    ") rows in (" + query.queryMS + "ms).");
+
+
+                // Flag success
+                retVal = cntInserts == rows;
             }
             catch (Exception ex)
             {
@@ -1496,5 +2036,68 @@ namespace DBTest
             }
             return retVal;
         }
+    }
+
+    public class TestAutomate
+    {
+        public const string CLASSNAME = "TestAutomate";
+
+        public bool isCreateTables = false;
+        public bool isCreateIndexes = false;
+        public bool isCreateProcedures = false;
+
+        public bool isSelectId = false;
+        public bool isSelectVarchar = false;
+        public bool isSelectDateRange = false;
+
+        public bool isUpdateById = false;
+        public bool isUpdateByVarchar = false;
+        public bool isUpdateByDateRange = false;
+
+        public bool isCountTable = false;
+
+        public TestAutomate()
+        {
+            
+        }
+
+
+        public bool init()
+        {
+            const string location = CLASSNAME + ".init";
+            bool retVal = false;
+            try
+            {
+                L.l(location, "Initializing test automation.");
+
+
+
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                L.ex(location, ex);
+            }
+            return retVal;
+        }
+
+        public bool begin()
+        {
+            const string location = CLASSNAME + ".begin";
+            bool retVal = false;
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                L.ex(location, ex);
+            }
+            return retVal;
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace DBTest
 {
@@ -50,10 +51,9 @@ namespace DBTest
                     L.err(location, "Input connection string was null or empty.");
                     return retVal;
                 }
-                DB.currentEngine = dbEngine;
 
-                L.l(location, "Initializing (" + DB.currentEngine + ") db engine.");
-                switch (DB.currentEngine)
+                L.l(location, "Initializing (" + dbEngine + ") db engine.");
+                switch (dbEngine)
                 {
                     case Engine.MARIADB: retVal = DBMariaDB.initDB(dbName, connectString); break;
                     case Engine.MSSQL: retVal = DBMSSQL.initDB(dbName, connectString); break;
@@ -64,7 +64,11 @@ namespace DBTest
                         L.err(location, "Unknown engine (" + DB.currentEngine + ").");
                         break;
                 }
-                if (retVal) L.l(location, "Initialized (" + DB.currentEngine + ").");
+                if (retVal)
+                {
+                    DB.currentEngine = dbEngine;
+                    L.l(location, "Initialized (" + DB.currentEngine + ").");
+                }
 
             }
             catch (Exception ex)
@@ -156,11 +160,11 @@ namespace DBTest
                 }
                 switch (DB.currentEngine)
                 {
-                    case Engine.MARIADB: retVal = DBMariaDB.createTestTable(dropFirst); break;
-                    case Engine.MSSQL: retVal = DBMSSQL.createTestTable(dropFirst); break;
-                    case Engine.MYSQL: retVal = DBMySQL.createTestTable(dropFirst); break;
-                    case Engine.POSTGRE: retVal = DBPostgre.createTestTable(dropFirst); break;
-                    case Engine.SQLITE: retVal = DBSQLite.createTestTable(dropFirst); break;
+                    case Engine.MARIADB: retVal = TSQL.MariaDB.createTestTable(dropFirst); break;
+                    case Engine.MSSQL: retVal = TSQL.MSSQL.createTestTable(dropFirst); break;
+                    case Engine.MYSQL: retVal = TSQL.MySQL.createTestTable(dropFirst); break;
+                    case Engine.POSTGRE: retVal = TSQL.Postgre.createTestTable(dropFirst); break;
+                    case Engine.SQLITE: retVal = TSQL.SQLite.createTestTable(dropFirst); break;
                     default:
                         L.err(location, "Unknown engine (" + DB.currentEngine + ").");
                         break;
@@ -228,6 +232,37 @@ namespace DBTest
             return retVal;
         }
 
+        public static Dictionary<string, string> getIndexes(string tableName)
+        {
+            const string location = CLASSNAME + ".getIndexes";
+            Dictionary<string, string> retVal = new Dictionary<string, string>();
+            try
+            {
+                if (tableName == null || tableName.Length == 0)
+                {
+                    L.err(location, "Input table name was null or empty.");
+                    return retVal;
+                }
+
+                switch (DB.currentEngine)
+                {
+                    case Engine.MARIADB: retVal = TSQL.MariaDB.getIndexes(tableName); break;
+                    case Engine.MSSQL: retVal = TSQL.MSSQL.getIndexes(tableName); break;
+                    case Engine.MYSQL: retVal = TSQL.MySQL.getIndexes(tableName); break;
+                    case Engine.POSTGRE: retVal = TSQL.Postgre.getIndexes(tableName); break;
+                    case Engine.SQLITE: retVal = TSQL.SQLite.getIndexes(tableName); break;
+                    default:
+                        L.err(location, "Unknown engine (" + DB.currentEngine + ").");
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                L.ex(location, ex);
+            }
+            return retVal;
+        }
+
         public static bool insert(ref SQLWrapper query)
         {
             const string location = CLASSNAME + ".insert(1)";
@@ -268,6 +303,62 @@ namespace DBTest
                     case Engine.SQLITE: retVal = DBSQLite.insertSameFormat(ref queries); break;
                     default:
                         L.err(location, "Unknown engine (" + DB.currentEngine + ").");
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                L.ex(location, ex);
+            }
+            return retVal;
+        }
+
+        public static string getProcedureSql(string procedureName, Dictionary<string, object> parms)
+        {
+            const string location = CLASSNAME + ".getProcedureSql";
+            string retVal = "";
+            try
+            {
+                if (procedureName == null || procedureName.Length == 0)
+                {
+                    L.err(location, "Input procedure name was null or empty.");
+                    return retVal;
+                }
+
+                // Create a parameter string
+                StringBuilder sb = new StringBuilder();
+                if (parms != null)
+                {
+                    bool started = false;
+                    foreach (KeyValuePair<string, object> kv in parms)
+                    {
+                        if (started) sb.Append(",");
+                        else started = true;
+                        sb.Append("@" + kv.Key);
+                    }
+                }
+
+                // Build procedure query
+                switch (DB.currentEngine)
+                {
+                    case DB.Engine.MARIADB:
+                        retVal = "call " + procedureName + "(" + sb.ToString() + ");";
+                        break;
+                    case DB.Engine.MSSQL:
+                        retVal = "exec " + procedureName + " " + sb.ToString() + ";";
+                        break;
+                    case DB.Engine.MYSQL:
+                        retVal = "call " + procedureName + "(" + sb.ToString() + ");";
+                        break;
+                    case DB.Engine.POSTGRE:
+                        retVal = "select * from " + procedureName + "(" + sb.ToString() + ");";
+                        break;
+                    case DB.Engine.SQLITE:
+                        // SQLite does not store procedures, so some hardcoded sql is used 
+                        // to simulate their place for testing only.
+                        retVal = TSQL.SQLite.getTestProcedure(procedureName);
+                        break;
+                    default:
                         break;
                 }
             }
